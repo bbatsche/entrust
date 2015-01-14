@@ -1,79 +1,419 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Entrust : Role-based Permissions for Laravel 4">
+    <title>Entrust by bbatsche</title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Entrust</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
+    <div class="wrapper">
+      <header>
+        <h1>Entrust</h1>
+        <p>Role-based Permissions for Laravel 4</p>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/bbatsche/entrust">View on GitHub</a>
+        <p class="view"><a href="https://github.com/bbatsche/entrust">View the Project on GitHub <small>bbatsche/entrust</small></a></p>
 
-          <h1 id="project_title">Entrust</h1>
-          <h2 id="project_tagline">Role-based Permissions for Laravel 4</h2>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/bbatsche/entrust/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/bbatsche/entrust/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+        <ul>
+          <li><a href="https://github.com/bbatsche/entrust/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/bbatsche/entrust/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/bbatsche/entrust">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="entrust-laravel4-package" class="anchor" href="#entrust-laravel4-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Entrust (Laravel4 Package)</h1>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<p>Entrust is a succinct and flexible way to add Role-based Permissions to <strong>Laravel4</strong>.</p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>First and foremost I must give credit to the original developers of this package. Andrew Elkins (<a href="https://github.com/andrewelkins" class="user-mention">@andrewelkins</a>) and Leroy Merlin (<a href="https://github.com/zizaco" class="user-mention">@zizaco</a>) did excellent work on the fundamental design and functionality. My fork is intended to:</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<ul>
+<li>Remove extra components not really relevant to role &amp; permission management (in particular, Ardent).</li>
+<li>Add extra functionality I felt was useful and particularly suited to this package.</li>
+<li>Make integrating the package more flexible and dynamic (eventually).</li>
+</ul>
+
+<p>Were my changes ever to be integrated back into the Zizaco version of this plugin, I think that would be lovely. Either way though, I hope to demonstrate some genuinely helpful features and options.</p>
+
+<h2>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick start</h2>
+
+<p><strong>PS:</strong> Even though it's not needed. Entrust works very well with <a href="https://github.com/Zizaco/confide">Confide</a> in order to eliminate repetitive tasks involving the management of users: account creation, login, logout, confirmation by e-mail, password reset, etc.</p>
+
+<p><a href="https://github.com/Zizaco/confide">Take a look at Confide</a></p>
+
+<h3>
+<a id="required-setup" class="anchor" href="#required-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Required setup</h3>
+
+<p>In the <code>require</code> key of <code>composer.json</code> file add the following</p>
+
+<pre><code>"bbatsche/entrust": "~2.0"
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>Run the Composer update command</p>
+
+<pre><code>$ composer update
+</code></pre>
+
+<p>In your <code>config/app.php</code> add <code>'Bbatsche\Entrust\EntrustServiceProvider'</code> to the end of the <code>$providers</code> array</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-s1"><span class="pl-pds">'</span>providers<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s3">array</span>(</span>
+<span class="pl-s2"></span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>Illuminate\Foundation\Providers\ArtisanServiceProvider<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>Illuminate\Auth\AuthServiceProvider<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s2">    <span class="pl-k">...</span></span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>Bbatsche\Entrust\EntrustServiceProvider<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s2"></span>
+<span class="pl-s2">),</span></pre></div>
+
+<p>At the end of <code>config/app.php</code> add <code>'Entrust' =&gt; 'Bbatsche\Entrust\EntrustFacade'</code> to the <code>$aliases</code> array</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-s1"><span class="pl-pds">'</span>aliases<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s3">array</span>(</span>
+<span class="pl-s2"></span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>App<span class="pl-pds">'</span></span>        <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>Illuminate\Support\Facades\App<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>Artisan<span class="pl-pds">'</span></span>    <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>Illuminate\Support\Facades\Artisan<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s2">    <span class="pl-k">...</span></span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>Entrust<span class="pl-pds">'</span></span>    <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>Bbatsche\Entrust\EntrustFacade<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s2"></span>
+<span class="pl-s2">),</span></pre></div>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>Set the property values in the <code>config/auth.php</code>. These values will be used by entrust to refer to the correct user table and model.</p>
 
 <h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<a id="user-relation-to-roles" class="anchor" href="#user-relation-to-roles" aria-hidden="true"><span class="octicon octicon-link"></span></a>User relation to roles</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>Now generate the Entrust migration</p>
+
+<pre><code>$ php artisan entrust:migration
+</code></pre>
+
+<p>It will generate the <code>&lt;timestamp&gt;_entrust_setup_tables.php</code> migration. You may now run it with the artisan migrate command:</p>
+
+<pre><code>$ php artisan migrate
+</code></pre>
+
+<p>After the migration, four new tables will be present: <code>roles</code> which stores roles, <code>permissions</code> for storing permissions, and <code>role_user</code> &amp; <code>permission_role</code> which will represent the <a href="http://laravel.com/docs/4.2/eloquent#many-to-many">Many-to-Many</a> relations between <code>User</code>, <code>Role</code>, and <code>Permission</code>.</p>
 
 <h3>
-<a id="rather-drive-stick" class="anchor" href="#rather-drive-stick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<a id="models" class="anchor" href="#models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Models</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Create a Role model inside <code>app/models/Role.php</code> using the following example:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s2"></span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">Bbatsche\Entrust\EntrustRole</span>;</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">Role</span> <span class="pl-s">extends</span> <span class="pl-e">EntrustRole</span></span>
+<span class="pl-s2">{</span>
+<span class="pl-s2"></span>
+<span class="pl-s2">}</span></pre></div>
+
+<p>The <code>Role</code> model has three main attributes: <code>name</code>, <code>display_name</code>, and <code>description</code>. <code>name</code>, as you can imagine, is
+the name of the Role. It is the unique key used to represent the Role in your application. For example: "admin",
+"owner", "employee". <code>display_name</code> is a human readable name for that role. It is not unique and may be used
+for display purposes. For example: "User Administrator", "Project Owner", "Widget  Co. Employee". <code>description</code> can be
+used for a longer form description of the role. Both <code>display_name</code> and <code>description</code> are optional; their fields are
+nullable in the database.</p>
+
+<p>Create a Permission model inside <code>app/models/Permission.php</code> using the following example:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s2"></span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">Bbatsche\Entrust\EntrustPermission</span>;</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">Permission</span> <span class="pl-s">extends</span> <span class="pl-e">EntrustPermission</span></span>
+<span class="pl-s2">{</span>
+<span class="pl-s2"></span>
+<span class="pl-s2">}</span></pre></div>
+
+<p>The <code>Permission</code> model has the same three attributes as the <code>Role</code>: <code>name</code>, <code>display_name</code>, and <code>description</code>. These
+three fields have the same general purpose as for your Roles, but instead applied to the Permission model.
+<code>name</code> is the unique name of the Permission. For example: "create-post", "edit-user", "post-payment",
+"mailing-list-subscribe". <code>display_name</code> is a viewer friendly version of the permission string. For example "Create
+Posts", "Edit Users", "Post Payments", "Subscribe to mailing list". Description can be a more detailed explanation for
+the Permission. In general, it may be helpful to think of the attributes in the form of a sentence: "The permission
+<code>display_name</code> allows a user to <code>description</code>."</p>
+
+<p>Next, use the <code>HasRole</code> trait in your existing <code>User</code> model. For example:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s2"></span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">Bbatsche\Entrust\HasRole</span>;</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">User</span> <span class="pl-s">extends</span> <span class="pl-e">Eloquent</span></span>
+<span class="pl-s2">{</span>
+<span class="pl-s2">    <span class="pl-k">use</span> <span class="pl-s3">HasRole</span>; <span class="pl-c">// Add this trait to your user model</span></span>
+<span class="pl-s2"></span>
+<span class="pl-s2">    <span class="pl-k">...</span></span>
+<span class="pl-s2">}</span></pre></div>
+
+<p>This will enable the relation with <code>Role</code> and add the following methods <code>roles()</code>, <code>hasRole($name)</code>,
+<code>can($permission)</code>, and <code>ability($roles, $permissions, $options)</code> within your <code>User</code> model.</p>
+
+<p>Don't forget to dump composer autoload</p>
+
+<pre><code>$ composer dump-autoload
+</code></pre>
+
+<p><strong>And you are ready to go.</strong></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<a id="concepts" class="anchor" href="#concepts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Concepts</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Let's start by creating the following <code>Role</code>s and <code>Permission</code>s:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$owner</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-s3">Role</span>();</span>
+<span class="pl-s2"><span class="pl-vo">$owner</span><span class="pl-k">-&gt;</span><span class="pl-vo">name</span>         <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s2"><span class="pl-vo">$owner</span><span class="pl-k">-&gt;</span><span class="pl-vo">display_name</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>Project Owner<span class="pl-pds">'</span></span>; <span class="pl-c">// optional</span></span>
+<span class="pl-s2"><span class="pl-vo">$owner</span><span class="pl-k">-&gt;</span><span class="pl-vo">description</span>  <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>User is the owner of a given project<span class="pl-pds">'</span></span>; <span class="pl-c">// optional</span></span>
+<span class="pl-s2"><span class="pl-vo">$owner</span><span class="pl-k">-&gt;</span>save();</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$admin</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-s3">Role</span>();</span>
+<span class="pl-s2"><span class="pl-vo">$admin</span><span class="pl-k">-&gt;</span><span class="pl-vo">name</span>         <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>admin<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s2"><span class="pl-vo">$admin</span><span class="pl-k">-&gt;</span><span class="pl-vo">display_name</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>User Administrator<span class="pl-pds">'</span></span>; <span class="pl-c">// optional</span></span>
+<span class="pl-s2"><span class="pl-vo">$admin</span><span class="pl-k">-&gt;</span><span class="pl-vo">description</span>  <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>User is allowed to manage and edit other users<span class="pl-pds">'</span></span>; <span class="pl-c">//optional</span></span>
+<span class="pl-s2"><span class="pl-vo">$admin</span><span class="pl-k">-&gt;</span>save();</span></pre></div>
+
+<p>Next, with both roles created let's assign them to the users. Thanks to the <code>HasRole</code> trait this is as easy as:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$user</span> <span class="pl-k">=</span> <span class="pl-s3">User</span><span class="pl-k">::</span>where(<span class="pl-s1"><span class="pl-pds">'</span>username<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>=<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>bbatsche<span class="pl-pds">'</span></span>)<span class="pl-k">-&gt;</span>first();</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-c">/* role attach alias */</span></span>
+<span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>attachRole(<span class="pl-vo">$admin</span>); <span class="pl-c">// Parameter can be an Role object, array or id.</span></span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-c">/* OR the eloquent's original: */</span></span>
+<span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>roles()<span class="pl-k">-&gt;</span>attach(<span class="pl-vo">$admin</span><span class="pl-k">-&gt;</span><span class="pl-vo">id</span>); <span class="pl-c">// id only</span></span></pre></div>
+
+<p>Now we just need to add permissions to those Roles.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$createPost</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-s3">Permission</span>();</span>
+<span class="pl-s2"><span class="pl-vo">$createPost</span><span class="pl-k">-&gt;</span><span class="pl-vo">name</span>         <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s2"><span class="pl-vo">$createPost</span><span class="pl-k">-&gt;</span><span class="pl-vo">display_name</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>Create Posts<span class="pl-pds">'</span></span>; <span class="pl-c">// optional</span></span>
+<span class="pl-s2"><span class="pl-c">// Allow a user to...</span></span>
+<span class="pl-s2"><span class="pl-vo">$createPost</span><span class="pl-k">-&gt;</span><span class="pl-vo">description</span>  <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>create new blog posts<span class="pl-pds">'</span></span>; <span class="pl-c">// optional</span></span>
+<span class="pl-s2"><span class="pl-vo">$createPost</span><span class="pl-k">-&gt;</span>save();</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$editUser</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-s3">Permission</span>();</span>
+<span class="pl-s2"><span class="pl-vo">$editUser</span><span class="pl-k">-&gt;</span><span class="pl-vo">name</span>         <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>edit-user<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s2"><span class="pl-vo">$editUser</span><span class="pl-k">-&gt;</span><span class="pl-vo">display_name</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>Edit Users<span class="pl-pds">'</span></span>; <span class="pl-c">// optional</span></span>
+<span class="pl-s2"><span class="pl-c">// Allow a user to...</span></span>
+<span class="pl-s2"><span class="pl-vo">$editUser</span><span class="pl-k">-&gt;</span><span class="pl-vo">description</span>  <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>edit existing users<span class="pl-pds">'</span></span>; <span class="pl-c">// optional</span></span>
+<span class="pl-s2"><span class="pl-vo">$editUser</span><span class="pl-k">-&gt;</span>save();</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$admin</span><span class="pl-k">-&gt;</span>attachPermission(<span class="pl-vo">$createPost</span>);</span>
+<span class="pl-s2"><span class="pl-c">// Equivalent to $admin-&gt;perms()-&gt;sync(array($createPost-&gt;id));</span></span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$owner</span><span class="pl-k">-&gt;</span>attachPermissions(<span class="pl-s3">array</span>(<span class="pl-vo">$createPost</span>, <span class="pl-vo">$editUser</span>));</span>
+<span class="pl-s2"><span class="pl-c">// Equivalent to $owner-&gt;perms()-&gt;sync(array($createPost-&gt;id, $editUser-&gt;id));</span></span></pre></div>
+
+<h4>
+<a id="checking-for-roles--permissions" class="anchor" href="#checking-for-roles--permissions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Checking for Roles &amp; Permissions</h4>
+
+<p>Now we can check for roles and permissions simply by doing:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>hasRole(<span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>);   <span class="pl-c">// false</span></span>
+<span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>hasRole(<span class="pl-s1"><span class="pl-pds">'</span>admin<span class="pl-pds">'</span></span>);   <span class="pl-c">// true</span></span>
+<span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>can(<span class="pl-s1"><span class="pl-pds">'</span>edit-user<span class="pl-pds">'</span></span>);   <span class="pl-c">// false</span></span>
+<span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>can(<span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>); <span class="pl-c">// true</span></span></pre></div>
+
+<p>Both <code>hasRole()</code> and <code>can()</code> can receive an array of roles &amp; permissions to check.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>hasRole([<span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>admin<span class="pl-pds">'</span></span>]);       <span class="pl-c">// true</span></span>
+<span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>can([<span class="pl-s1"><span class="pl-pds">'</span>edit-user<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>]); <span class="pl-c">// true</span></span></pre></div>
+
+<p>By default, if any of the roles or permissions are present for a user then the method will return true. Passing <code>true</code> as a second parameter instructs the method to require <strong>all</strong> of the items.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>hasRole([<span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>admin<span class="pl-pds">'</span></span>]);             <span class="pl-c">// true</span></span>
+<span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>hasRole([<span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>admin<span class="pl-pds">'</span></span>], <span class="pl-c1">true</span>);       <span class="pl-c">// false; user does not have admin role</span></span>
+<span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>can([<span class="pl-s1"><span class="pl-pds">'</span>edit-user<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>]);       <span class="pl-c">// true</span></span>
+<span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>can([<span class="pl-s1"><span class="pl-pds">'</span>edit-user<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>], <span class="pl-c1">true</span>); <span class="pl-c">// false; user does not have edit-user permission</span></span></pre></div>
+
+<p>You can have as many <code>Role</code>s as you want for each <code>User</code> and vice versa.</p>
+
+<p>The <code>Entrust</code> class has shortcuts to both <code>can()</code> and <code>hasRole()</code> for the currently logged in user. The following example:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-s3">Entrust</span><span class="pl-k">::</span>hasRole(<span class="pl-s1"><span class="pl-pds">'</span>role-name<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s2"><span class="pl-s3">Entrust</span><span class="pl-k">::</span>can(<span class="pl-s1"><span class="pl-pds">'</span>permission-name<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<p>would be identical to:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-s3">Auth</span><span class="pl-k">::</span>user()<span class="pl-k">-&gt;</span>hasRole(<span class="pl-s1"><span class="pl-pds">'</span>role-name<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s2"><span class="pl-s3">Auth</span><span class="pl-k">::</span>user()<span class="pl-k">-&gt;</span>can(<span class="pl-s1"><span class="pl-pds">'</span>permission-name);</span></span></pre></div>
+
+<h4>
+<a id="user-ability" class="anchor" href="#user-ability" aria-hidden="true"><span class="octicon octicon-link"></span></a>User Ability</h4>
+
+<p>More advanced checking can be done using the awesome <code>ability</code> function. It takes in three parameters (roles,
+permissions, options). <code>roles</code> is a set of roles to check. <code>permissions</code> is a set of permissions to check.
+Either of the roles or permissions variable can be a comma separated string or array.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>ability(<span class="pl-s3">array</span>(<span class="pl-s1"><span class="pl-pds">'</span>admin<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>), <span class="pl-s3">array</span>(<span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>edit-user<span class="pl-pds">'</span></span>));</span>
+<span class="pl-s2"><span class="pl-c">//or</span></span>
+<span class="pl-s2"><span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>ability(<span class="pl-s1"><span class="pl-pds">'</span>admin,owner<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>create-post,edit-user<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<p>This will check whether the user has any of the provided roles and permissions. In this case it will return true
+since the user is an <code>admin</code> and has the <code>create-post</code> permission.</p>
+
+<p>The third parameter is an options array.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$options</span> <span class="pl-k">=</span> <span class="pl-s3">array</span>(</span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>validate_all<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">true</span> <span class="pl-k">|</span> false (<span class="pl-c1">Default</span>: <span class="pl-c1">false</span>),</span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>return_type<span class="pl-pds">'</span></span>  <span class="pl-k">=&gt;</span> <span class="pl-st">boolean</span> <span class="pl-k">|</span> <span class="pl-st">array</span> <span class="pl-k">|</span> both (<span class="pl-c1">Default</span>: <span class="pl-st">boolean</span>)</span>
+<span class="pl-s2">);</span></pre></div>
+
+<ul>
+<li>
+<code>validate_all</code> is a boolean flag to set whether to check all the values for true, or to return true if at least one
+role or permission is matched.</li>
+<li>
+<code>return_type</code> specifies whether to return a boolean, array of checked values, or both in an array.</li>
+</ul>
+
+<p>Here's some example output.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$options</span> <span class="pl-k">=</span> <span class="pl-s3">array</span>(</span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>validate_all<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">true</span>,</span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>return_type<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>both<span class="pl-pds">'</span></span></span>
+<span class="pl-s2">);</span>
+<span class="pl-s2"><span class="pl-s3">list</span>(<span class="pl-vo">$validate</span>, <span class="pl-vo">$allValidations</span>) <span class="pl-k">=</span> <span class="pl-vo">$user</span><span class="pl-k">-&gt;</span>ability(<span class="pl-s3">array</span>(<span class="pl-s1"><span class="pl-pds">'</span>admin<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>), <span class="pl-s3">array</span>(<span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>edit-user<span class="pl-pds">'</span></span>), <span class="pl-vo">$options</span>);</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-c">// Output</span></span>
+<span class="pl-s2"><span class="pl-s3">var_dump</span>(<span class="pl-vo">$validate</span>);</span>
+<span class="pl-s2"><span class="pl-st">bool</span>(<span class="pl-c1">false</span>)</span>
+<span class="pl-s2"><span class="pl-s3">var_dump</span>(<span class="pl-vo">$allValidations</span>);</span>
+<span class="pl-s2"><span class="pl-s3">array</span>(<span class="pl-c1">4</span>) {</span>
+<span class="pl-s2">  [<span class="pl-s1"><span class="pl-pds">'</span>role<span class="pl-pds">'</span></span>]<span class="pl-k">=&gt;</span></span>
+<span class="pl-s2">  <span class="pl-st">bool</span>(<span class="pl-c1">true</span>)</span>
+<span class="pl-s2">  [<span class="pl-s1"><span class="pl-pds">'</span>role_2<span class="pl-pds">'</span></span>]<span class="pl-k">=&gt;</span></span>
+<span class="pl-s2">  <span class="pl-st">bool</span>(<span class="pl-c1">false</span>)</span>
+<span class="pl-s2">  [<span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>]<span class="pl-k">=&gt;</span></span>
+<span class="pl-s2">  <span class="pl-st">bool</span>(<span class="pl-c1">true</span>)</span>
+<span class="pl-s2">  [<span class="pl-s1"><span class="pl-pds">'</span>edit-user<span class="pl-pds">'</span></span>]<span class="pl-k">=&gt;</span></span>
+<span class="pl-s2">  <span class="pl-st">bool</span>(<span class="pl-c1">false</span>)</span>
+<span class="pl-s2">}</span></pre></div>
 
 <h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a id="short-syntax-route-filter" class="anchor" href="#short-syntax-route-filter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Short Syntax Route Filter</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>To filter a route by permission or role you can call the following in your <code>app/filters.php</code>:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-c">// Only users with roles that have the 'manage_posts' permission will</span></span>
+<span class="pl-s2"><span class="pl-c">// be able to access any route within admin/post.</span></span>
+<span class="pl-s2"><span class="pl-s3">Entrust</span><span class="pl-k">::</span>routeNeedsPermission(<span class="pl-s1"><span class="pl-pds">'</span>admin/post*<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-c">// Only owners will have access to routes within admin/advanced</span></span>
+<span class="pl-s2"><span class="pl-s3">Entrust</span><span class="pl-k">::</span>routeNeedsRole(<span class="pl-s1"><span class="pl-pds">'</span>admin/advanced*<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-c">// Optionally the second parameter can be an array of permissions or roles.</span></span>
+<span class="pl-s2"><span class="pl-c">// User would need to match all roles or permissions for that route.</span></span>
+<span class="pl-s2"><span class="pl-s3">Entrust</span><span class="pl-k">::</span>routeNeedsPermission(<span class="pl-s1"><span class="pl-pds">'</span>admin/post*<span class="pl-pds">'</span></span>, <span class="pl-s3">array</span>(<span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>edit-comment<span class="pl-pds">'</span></span>));</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-s3">Entrust</span><span class="pl-k">::</span>routeNeedsRole(<span class="pl-s1"><span class="pl-pds">'</span>admin/advanced*<span class="pl-pds">'</span></span>, <span class="pl-s3">array</span>(<span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>,<span class="pl-s1"><span class="pl-pds">'</span>writer<span class="pl-pds">'</span></span>));</span></pre></div>
+
+<p>Both of these methods accept a third parameter. If the third parameter is null then the return of a prohibited access will be <code>App::abort(403)</code>. Otherwise the third parameter will be returned. So you can use it like:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-s3">Entrust</span><span class="pl-k">::</span>routeNeedsRole(<span class="pl-s1"><span class="pl-pds">'</span>admin/advanced*<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>, <span class="pl-s3">Redirect</span><span class="pl-k">::</span>to(<span class="pl-s1"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>));</span></pre></div>
+
+<p>Further more both of these methods accept a fourth parameter. It defaults to true and checks all roles/permissions
+given. If you set it to false, the function will only fail if all roles/permissions fail for that user. Useful for
+admin applications where you want to allow access for multiple groups.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-c">// If a user has `create-post`, `edit-comment` or both they will have access.</span></span>
+<span class="pl-s2"><span class="pl-s3">Entrust</span><span class="pl-k">::</span>routeNeedsPermission(<span class="pl-s1"><span class="pl-pds">'</span>admin/post*<span class="pl-pds">'</span></span>, <span class="pl-s3">array</span>(<span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>edit-comment<span class="pl-pds">'</span></span>), <span class="pl-c1">null</span>, <span class="pl-c1">false</span>);</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-c">// If a user is a member of `owner`, `writer` or both they will have access.</span></span>
+<span class="pl-s2"><span class="pl-s3">Entrust</span><span class="pl-k">::</span>routeNeedsRole(<span class="pl-s1"><span class="pl-pds">'</span>admin/advanced*<span class="pl-pds">'</span></span>, <span class="pl-s3">array</span>(<span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>,<span class="pl-s1"><span class="pl-pds">'</span>writer<span class="pl-pds">'</span></span>), <span class="pl-c1">null</span>, <span class="pl-c1">false</span>);</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-c">// If a user is a member of `owner`, `writer` or both, or user has `create-post`, `edit-comment` they will have access.</span></span>
+<span class="pl-s2"><span class="pl-c">// You can set the 4th parameter to true then user must be member of Role and must has Permission.</span></span>
+<span class="pl-s2"><span class="pl-s3">Entrust</span><span class="pl-k">::</span>routeNeedsRoleOrPermission(</span>
+<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>admin/advanced*<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s2">    <span class="pl-s3">array</span>(<span class="pl-s1"><span class="pl-pds">'</span>owner<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>writer<span class="pl-pds">'</span></span>),</span>
+<span class="pl-s2">    <span class="pl-s3">array</span>(<span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>edit-comment<span class="pl-pds">'</span></span>),</span>
+<span class="pl-s2">    <span class="pl-c1">null</span>,</span>
+<span class="pl-s2">    <span class="pl-c1">false</span></span>
+<span class="pl-s2">);</span></pre></div>
+
+<h3>
+<a id="route-filter" class="anchor" href="#route-filter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Route filter</h3>
+
+<p>Entrust roles/permissions can be used in filters by simply using the <code>can</code> and <code>hasRole</code> methods from within the Facade.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-s3">Route</span><span class="pl-k">::</span>filter(<span class="pl-s1"><span class="pl-pds">'</span>manage_posts<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>()</span>
+<span class="pl-s2">{</span>
+<span class="pl-s2">    <span class="pl-c">// Checks the current user</span></span>
+<span class="pl-s2">    <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-s3">Entrust</span><span class="pl-k">::</span>can(<span class="pl-s1"><span class="pl-pds">'</span>create-post<span class="pl-pds">'</span></span>)) {</span>
+<span class="pl-s2">        <span class="pl-k">return</span> <span class="pl-s3">Redirect</span><span class="pl-k">::</span>to(<span class="pl-s1"><span class="pl-pds">'</span>admin<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s2">    }</span>
+<span class="pl-s2">});</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-c">// Only users with roles that have the 'manage_posts' permission will</span></span>
+<span class="pl-s2"><span class="pl-c">// be able to access any admin/post route.</span></span>
+<span class="pl-s2"><span class="pl-s3">Route</span><span class="pl-k">::</span>when(<span class="pl-s1"><span class="pl-pds">'</span>admin/post*<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>manage_posts<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<p>Using a filter to check for a role:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-s3">Route</span><span class="pl-k">::</span>filter(<span class="pl-s1"><span class="pl-pds">'</span>owner_role<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>()</span>
+<span class="pl-s2">{</span>
+<span class="pl-s2">    <span class="pl-c">// Checks the current user</span></span>
+<span class="pl-s2">    <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-s3">Entrust</span><span class="pl-k">::</span>hasRole(<span class="pl-s1"><span class="pl-pds">'</span>Owner<span class="pl-pds">'</span></span>)) {</span>
+<span class="pl-s2">        <span class="pl-s3">App</span><span class="pl-k">::</span>abort(<span class="pl-c1">403</span>);</span>
+<span class="pl-s2">    }</span>
+<span class="pl-s2">});</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-c">// Only owners will have access to routes within admin/advanced</span></span>
+<span class="pl-s2"><span class="pl-s3">Route</span><span class="pl-k">::</span>when(<span class="pl-s1"><span class="pl-pds">'</span>admin/advanced*<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>owner_role<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<p>As you can see <code>Entrust::hasRole()</code> and <code>Entrust::can()</code> checks if the user is logged in, and then if he or she has the
+role or permission. If the user is not logged the return will also be <code>false</code>.</p>
+
+<h2>
+<a id="troubleshooting" class="anchor" href="#troubleshooting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Troubleshooting</h2>
+
+<p>If you encounter an error when doing the migration that looks like:</p>
+
+<pre><code>SQLSTATE[HY000]: General error: 1005 Can't create table 'laravelbootstrapstarter.#sql-42c_f8' (errno: 150)
+    (SQL: alter table `role_user` add constraint role_user_user_id_foreign foreign key (`user_id`)
+    references `users` (`id`)) (Bindings: array ())
+</code></pre>
+
+<p>Then it's likely that the <code>id</code> column in your user table does not match the <code>user_id</code> column in <code>role_user</code>. Match sure
+both are <code>INT(10)</code>.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Entrust is free software distributed under the terms of the MIT license</p>
+
+<h2>
+<a id="additional-information" class="anchor" href="#additional-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>Additional information</h2>
+
+<p>Library documentation is hosted on <a href="http://bbatsche.github.io/entrust/docs">GitHub Pages</a>.</p>
+
+<p>Any questions, feel free to contact me or ask <a href="http://laravel.io/forum/09-23-2014-package-zizaco-entrust">here</a></p>
+
+<p>Any issues, please <a href="https://github.com/bbatsche/entrust/issues">report here</a></p>
       </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Entrust maintained by <a href="https://github.com/bbatsche">bbatsche</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/bbatsche">bbatsche</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-
+    <script src="javascripts/scale.fix.js"></script>
     
-
   </body>
 </html>
