@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>Bbatsche\Entrust\EntrustRole | Entrust API</title>
+        <title>Bbatsche\Entrust\HasRole | Entrust API</title>
                     <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,12 +19,12 @@
 
         <div id="title">Entrust API</div>
 
-            <div class="type">Class</div>
-    <h1><a href="../../Bbatsche/Entrust.html">Bbatsche\Entrust</a>\EntrustRole</h1>
+            <div class="type">Trait</div>
+    <h1><a href="../../Bbatsche/Entrust.html">Bbatsche\Entrust</a>\HasRole</h1>
     </div>
         <div class="content">
-                <p>    class
-    <strong>EntrustRole</strong>        extends <abbr title="Illuminate\Database\Eloquent\Model">Model</abbr></p>
+                <p>    trait
+    <strong>HasRole</strong></p>
 
     
     
@@ -34,61 +34,41 @@
             <table>
                     <tr>
                 <td class="type">
-                    void
-                </td>
-                <td class="last">
-                    <a href="#method___construct">__construct</a>(array $attributes = array())
-                    <p>Creates a new instance of the model.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
                     <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
                 </td>
                 <td class="last">
-                    <a href="#method_users">users</a>()
-                    <p>Many-to-Many relations with the user model.</p>
+                    <a href="#method_roles">roles</a>()
+                    <p>Many-to-Many relations with Role.</p>
                 </td>
                 <td></td>
             </tr>
                     <tr>
                 <td class="type">
-                    <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
+                    bool
                 </td>
                 <td class="last">
-                    <a href="#method_perms">perms</a>()
-                    <p>Many-to-Many relations with the permission model.</p>
+                    <a href="#method_hasRole">hasRole</a>(string|array $name, bool $requireAll = false)
+                    <p>Checks if the user has a role by its name.</p>
                 </td>
                 <td></td>
             </tr>
                     <tr>
                 <td class="type">
-                    static&nbsp;void|bool
+                    bool
                 </td>
                 <td class="last">
-                    <a href="#method_boot">boot</a>()
-                    <p>Boot the role model Attach event listener to remove the many-to-many records when trying to delete Will NOT delete any records if the role model uses soft deletes.</p>
+                    <a href="#method_can">can</a>(string|array $permission, bool $requireAll = false)
+                    <p>Check if user has a permission by its name.</p>
                 </td>
                 <td></td>
             </tr>
                     <tr>
                 <td class="type">
-                    void
+                    array|bool
                 </td>
                 <td class="last">
-                    <a href="#method_savePermissions">savePermissions</a>(mixed $inputPermissions)
-                    <p>Save the inputted permissions.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    void
-                </td>
-                <td class="last">
-                    <a href="#method_attachPermission">attachPermission</a>(object|array $permission)
-                    <p>Attach permission to current role.</p>
+                    <a href="#method_ability">ability</a>(string|array $roles, string|array $permissions, array $options = array())
+                    <p>Checks role(s) and permission(s).</p>
                 </td>
                 <td></td>
             </tr>
@@ -97,8 +77,8 @@
                     void
                 </td>
                 <td class="last">
-                    <a href="#method_detachPermission">detachPermission</a>(object|array $permission)
-                    <p>Detach permission form current role.</p>
+                    <a href="#method_attachRole">attachRole</a>(mixed $role)
+                    <p>Alias to eloquent many-to-many relation's attach() method.</p>
                 </td>
                 <td></td>
             </tr>
@@ -107,8 +87,8 @@
                     void
                 </td>
                 <td class="last">
-                    <a href="#method_attachPermissions">attachPermissions</a>(mixed $permissions)
-                    <p>Attach multiple permissions to current role.</p>
+                    <a href="#method_detachRole">detachRole</a>(mixed $role)
+                    <p>Alias to eloquent many-to-many relation's detach() method.</p>
                 </td>
                 <td></td>
             </tr>
@@ -117,8 +97,18 @@
                     void
                 </td>
                 <td class="last">
-                    <a href="#method_detachPermissions">detachPermissions</a>(mixed $permissions)
-                    <p>Detach multiple permissions from current role</p>
+                    <a href="#method_attachRoles">attachRoles</a>(mixed $roles)
+                    <p>Attach multiple roles to a user</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method_detachRoles">detachRoles</a>(mixed $roles)
+                    <p>Detach multiple roles from a user</p>
                 </td>
                 <td></td>
             </tr>
@@ -127,24 +117,141 @@
 
         <h2>Details</h2>
 
-                        <h3 id="method___construct">
-        <div class="location">at line 22</div>
-        <code>            public            void
-    <strong>__construct</strong>(array $attributes = array())</code>
+                        <h3 id="method_roles">
+        <div class="location">at line 13</div>
+        <code>            public            <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
+    <strong>roles</strong>()</code>
     </h3>
     <div class="details">
-        <p>Creates a new instance of the model.</p>
+        <p>Many-to-Many relations with Role.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_hasRole">
+        <div class="location">at line 26</div>
+        <code>            public            bool
+    <strong>hasRole</strong>(string|array $name, bool $requireAll = false)</code>
+    </h3>
+    <div class="details">
+        <p>Checks if the user has a role by its name.</p>
         <p>
 </p>
         <div class="tags">
                             <h4>Parameters</h4>
 
                     <table>
+                    <tr>
+                <td>string|array</td>
+                <td>$name</td>
+                <td>Role name or array of role names.</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$requireAll</td>
+                <td>All roles in the array are required.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_can">
+        <div class="location">at line 62</div>
+        <code>            public            bool
+    <strong>can</strong>(string|array $permission, bool $requireAll = false)</code>
+    </h3>
+    <div class="details">
+        <p>Check if user has a permission by its name.</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string|array</td>
+                <td>$permission</td>
+                <td>Permission string or array of permissions.</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$requireAll</td>
+                <td>All permissions in the array are required.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_ability">
+        <div class="location">at line 104</div>
+        <code>            public            array|bool
+    <strong>ability</strong>(string|array $roles, string|array $permissions, array $options = array())</code>
+    </h3>
+    <div class="details">
+        <p>Checks role(s) and permission(s).</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string|array</td>
+                <td>$roles</td>
+                <td>Array of roles or comma separated string</td>
+            </tr>
+                    <tr>
+                <td>string|array</td>
+                <td>$permissions</td>
+                <td>Array of permissions or comma separated string.</td>
+            </tr>
                     <tr>
                 <td>array</td>
-                <td>$attributes</td>
-                <td>
-</td>
+                <td>$options</td>
+                <td>validate<em>all (true|false) or return</em>type (boolean|array|both)</td>
             </tr>
             </table>
 
@@ -153,101 +260,34 @@
 
                     <table>
         <tr>
-            <td>void</td>
+            <td>array|bool</td>
             <td>
 </td>
         </tr>
     </table>
 
             
-            
-                    </div>
-    </div>
-
-                <h3 id="method_users">
-        <div class="location">at line 33</div>
-        <code>            public            <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
-    <strong>users</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Many-to-Many relations with the user model.</p>
-        <p>
-</p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
+                            <h4>Exceptions</h4>
 
                     <table>
-        <tr>
-            <td><abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr></td>
-            <td>
+                    <tr>
+                <td><a href="http://php.net/InvalidArgumentException"><abbr title="InvalidArgumentException">InvalidArgumentException</abbr></a></td>
+                <td>
 </td>
-        </tr>
-    </table>
+            </tr>
+            </table>
 
-            
             
                     </div>
     </div>
 
-                <h3 id="method_perms">
-        <div class="location">at line 44</div>
-        <code>            public            <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
-    <strong>perms</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Many-to-Many relations with the permission model.</p>
-        <p>Named "perms" for backwards compatibility. Also because "perms" is short and sweet.</p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td><abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr></td>
-            <td>
-</td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_boot">
-        <div class="location">at line 56</div>
-        <code>        static    public            void|bool
-    <strong>boot</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Boot the role model Attach event listener to remove the many-to-many records when trying to delete Will NOT delete any records if the role model uses soft deletes.</p>
-        <p>
-</p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>void|bool</td>
-            <td>
-</td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_savePermissions">
-        <div class="location">at line 77</div>
+                <h3 id="method_attachRole">
+        <div class="location">at line 170</div>
         <code>            public            void
-    <strong>savePermissions</strong>(mixed $inputPermissions)</code>
+    <strong>attachRole</strong>(mixed $role)</code>
     </h3>
     <div class="details">
-        <p>Save the inputted permissions.</p>
+        <p>Alias to eloquent many-to-many relation's attach() method.</p>
         <p>
 </p>
         <div class="tags">
@@ -256,7 +296,7 @@
                     <table>
                     <tr>
                 <td>mixed</td>
-                <td>$inputPermissions</td>
+                <td>$role</td>
                 <td>
 </td>
             </tr>
@@ -278,87 +318,13 @@
                     </div>
     </div>
 
-                <h3 id="method_attachPermission">
-        <div class="location">at line 93</div>
+                <h3 id="method_detachRole">
+        <div class="location">at line 190</div>
         <code>            public            void
-    <strong>attachPermission</strong>(object|array $permission)</code>
+    <strong>detachRole</strong>(mixed $role)</code>
     </h3>
     <div class="details">
-        <p>Attach permission to current role.</p>
-        <p>
-</p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td>object|array</td>
-                <td>$permission</td>
-                <td>
-</td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>void</td>
-            <td>
-</td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_detachPermission">
-        <div class="location">at line 113</div>
-        <code>            public            void
-    <strong>detachPermission</strong>(object|array $permission)</code>
-    </h3>
-    <div class="details">
-        <p>Detach permission form current role.</p>
-        <p>
-</p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td>object|array</td>
-                <td>$permission</td>
-                <td>
-</td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>void</td>
-            <td>
-</td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_attachPermissions">
-        <div class="location">at line 131</div>
-        <code>            public            void
-    <strong>attachPermissions</strong>(mixed $permissions)</code>
-    </h3>
-    <div class="details">
-        <p>Attach multiple permissions to current role.</p>
+        <p>Alias to eloquent many-to-many relation's detach() method.</p>
         <p>
 </p>
         <div class="tags">
@@ -367,7 +333,7 @@
                     <table>
                     <tr>
                 <td>mixed</td>
-                <td>$permissions</td>
+                <td>$role</td>
                 <td>
 </td>
             </tr>
@@ -389,13 +355,13 @@
                     </div>
     </div>
 
-                <h3 id="method_detachPermissions">
-        <div class="location">at line 145</div>
+                <h3 id="method_attachRoles">
+        <div class="location">at line 210</div>
         <code>            public            void
-    <strong>detachPermissions</strong>(mixed $permissions)</code>
+    <strong>attachRoles</strong>(mixed $roles)</code>
     </h3>
     <div class="details">
-        <p>Detach multiple permissions from current role</p>
+        <p>Attach multiple roles to a user</p>
         <p>
 </p>
         <div class="tags">
@@ -404,7 +370,44 @@
                     <table>
                     <tr>
                 <td>mixed</td>
-                <td>$permissions</td>
+                <td>$roles</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_detachRoles">
+        <div class="location">at line 224</div>
+        <code>            public            void
+    <strong>detachRoles</strong>(mixed $roles)</code>
+    </h3>
+    <div class="details">
+        <p>Detach multiple roles from a user</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>mixed</td>
+                <td>$roles</td>
                 <td>
 </td>
             </tr>

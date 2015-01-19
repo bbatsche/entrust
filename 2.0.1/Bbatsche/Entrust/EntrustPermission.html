@@ -54,11 +54,11 @@
             </tr>
                     <tr>
                 <td class="type">
-                    static&nbsp;void|bool
+                    bool
                 </td>
                 <td class="last">
-                    <a href="#method_boot">boot</a>()
-                    <p>Boot the permission model Attach event listener to remove the many-to-many records when trying to delete Will NOT delete any records if the permission model uses soft deletes.</p>
+                    <a href="#method_beforeDelete">beforeDelete</a>(bool $forced = false)
+                    <p>Before delete, remove all constrained foreign relations.</p>
                 </td>
                 <td></td>
             </tr>
@@ -130,22 +130,33 @@
                     </div>
     </div>
 
-                <h3 id="method_boot">
+                <h3 id="method_beforeDelete">
         <div class="location">at line 45</div>
-        <code>        static    public            void|bool
-    <strong>boot</strong>()</code>
+        <code>            public            bool
+    <strong>beforeDelete</strong>(bool $forced = false)</code>
     </h3>
     <div class="details">
-        <p>Boot the permission model Attach event listener to remove the many-to-many records when trying to delete Will NOT delete any records if the permission model uses soft deletes.</p>
+        <p>Before delete, remove all constrained foreign relations.</p>
         <p>
 </p>
         <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>bool</td>
+                <td>$forced</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
             
                             <h4>Return Value</h4>
 
                     <table>
         <tr>
-            <td>void|bool</td>
+            <td>bool</td>
             <td>
 </td>
         </tr>

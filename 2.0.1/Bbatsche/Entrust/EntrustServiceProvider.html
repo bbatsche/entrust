@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>Bbatsche\Entrust\EntrustPermission | Entrust API</title>
+        <title>Bbatsche\Entrust\EntrustServiceProvider | Entrust API</title>
                     <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
                             </head>
         <body id="class">
@@ -20,11 +20,11 @@
         <div id="title">Entrust API</div>
 
             <div class="type">Class</div>
-    <h1><a href="../../Bbatsche/Entrust.html">Bbatsche\Entrust</a>\EntrustPermission</h1>
+    <h1><a href="../../Bbatsche/Entrust.html">Bbatsche\Entrust</a>\EntrustServiceProvider</h1>
     </div>
         <div class="content">
                 <p>    class
-    <strong>EntrustPermission</strong>        extends <abbr title="Illuminate\Database\Eloquent\Model">Model</abbr></p>
+    <strong>EntrustServiceProvider</strong>        extends <abbr title="Illuminate\Support\ServiceProvider">ServiceProvider</abbr></p>
 
     
     
@@ -37,28 +37,28 @@
                     void
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(array $attributes = array())
-                    <p>Creates a new instance of the model.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
-                </td>
-                <td class="last">
-                    <a href="#method_roles">roles</a>()
-                    <p>Many-to-Many relations with role model.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    static&nbsp;void|bool
-                </td>
-                <td class="last">
                     <a href="#method_boot">boot</a>()
-                    <p>Boot the permission model Attach event listener to remove the many-to-many records when trying to delete Will NOT delete any records if the permission model uses soft deletes.</p>
+                    <p>Bootstrap the application events.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method_register">register</a>()
+                    <p>Register the service provider.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    array
+                </td>
+                <td class="last">
+                    <a href="#method_provides">provides</a>()
+                    <p>Get the services provided.</p>
                 </td>
                 <td></td>
             </tr>
@@ -67,27 +67,16 @@
 
         <h2>Details</h2>
 
-                        <h3 id="method___construct">
-        <div class="location">at line 22</div>
+                        <h3 id="method_boot">
+        <div class="location">at line 19</div>
         <code>            public            void
-    <strong>__construct</strong>(array $attributes = array())</code>
+    <strong>boot</strong>()</code>
     </h3>
     <div class="details">
-        <p>Creates a new instance of the model.</p>
+        <p>Bootstrap the application events.</p>
         <p>
 </p>
         <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td>array</td>
-                <td>$attributes</td>
-                <td>
-</td>
-            </tr>
-            </table>
-
             
                             <h4>Return Value</h4>
 
@@ -104,13 +93,13 @@
                     </div>
     </div>
 
-                <h3 id="method_roles">
-        <div class="location">at line 33</div>
-        <code>            public            <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
-    <strong>roles</strong>()</code>
+                <h3 id="method_register">
+        <div class="location">at line 31</div>
+        <code>            public            void
+    <strong>register</strong>()</code>
     </h3>
     <div class="details">
-        <p>Many-to-Many relations with role model.</p>
+        <p>Register the service provider.</p>
         <p>
 </p>
         <div class="tags">
@@ -119,7 +108,7 @@
 
                     <table>
         <tr>
-            <td><abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr></td>
+            <td>void</td>
             <td>
 </td>
         </tr>
@@ -130,13 +119,13 @@
                     </div>
     </div>
 
-                <h3 id="method_boot">
-        <div class="location">at line 45</div>
-        <code>        static    public            void|bool
-    <strong>boot</strong>()</code>
+                <h3 id="method_provides">
+        <div class="location">at line 67</div>
+        <code>            public            array
+    <strong>provides</strong>()</code>
     </h3>
     <div class="details">
-        <p>Boot the permission model Attach event listener to remove the many-to-many records when trying to delete Will NOT delete any records if the permission model uses soft deletes.</p>
+        <p>Get the services provided.</p>
         <p>
 </p>
         <div class="tags">
@@ -145,7 +134,7 @@
 
                     <table>
         <tr>
-            <td>void|bool</td>
+            <td>array</td>
             <td>
 </td>
         </tr>
