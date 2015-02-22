@@ -23,6 +23,10 @@ Either way though, I hope to demonstrate some genuinely helpful features and opt
         - [Permission](#permission)
         - [User](#user)
         - [Soft Deleting](#soft-deleting)
+        - [Non-Standard Table Names](#non-standard-table-names)
+            - [Role Constructor](#role-constructor)
+            - [Permission Constructor](#permission-constructor)
+        - [EntrustRole and EntrustPermission Classes](#entrustrole-and-entrustpermission-classes)
 - [Usage](#usage)
     - [Concepts](#concepts)
         - [Checking for Roles & Permissions](#checking-for-roles--permissions)
@@ -189,9 +193,8 @@ composer dump-autoload
 
 Entrust is configured by default to follow Laravel's naming conventions for table names, so data for your `Role` model is stored in a table called `roles`. If you change these defaults in Entrust's configuration, you need to reflect these changes in your models as well. This can be done simply by adding a constructor like the following:
 
+##### Role Constructor
 ```php
-// Role model
-
 public function __construct($attr = array())
 {
     $this->table = Laravel\Config::get('entrust::roles_table');
@@ -199,9 +202,8 @@ public function __construct($attr = array())
 }
 ```
 
+##### Permission Constructor
 ```php
-// Permission model
-
 public function __construct($attr = array())
 {
     parent::__construct($attr);
@@ -209,7 +211,7 @@ public function __construct($attr = array())
 }
 ```
 
-#### Role and Permission Classes
+#### EntrustRole and EntrustPermission Classes
 
 For easy of use (and backwards compatibility) Entrust includes abstract classes `Bbatsche\Entrust\EntrustRole` and `Bbatsche\Entrust\EntrustPermission`. Your `Role` and `Permission` models may simply extend these classes which in turn implement their respective interfaces and traits. They also include the aforementioned constructors. Depending on your needs, these may be simpler to implement in your models.
 
