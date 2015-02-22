@@ -7,7 +7,7 @@ use Bbatsche\Entrust\Traits\EntrustPermissionTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 
-class EntrustPermission extends Model implements EntrustPermissionInterface
+abstract class EntrustPermission extends Model implements EntrustPermissionInterface
 {
     use EntrustPermissionTrait;
 

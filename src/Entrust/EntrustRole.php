@@ -7,7 +7,7 @@ use Bbatsche\Entrust\Traits\EntrustRoleTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 
-class EntrustRole extends Model implements EntrustRoleInterface
+abstract class EntrustRole extends Model implements EntrustRoleInterface
 {
     use EntrustRoleTrait;
 
