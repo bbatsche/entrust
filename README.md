@@ -116,14 +116,17 @@ Create a Role model inside `app/models/Role.php` using the following example:
 ```php
 <?php
 
-use Bbatsche\Entrust\EntrustRole;
+use Bbatsche\Entrust\Contracts\EntrustRoleInterface;
+use Bbatsche\Entrust\Traits\EntrustRoleTrait;
 
-class Role extends EntrustRole
+class Role extends Eloquent implements EntrustRoleInterface
 {
+    use EntrustRoleTrait;
 }
 ```
 
 The `Role` model has three main attributes:
+
 - `name` &mdash; Unique name for the Role, used for looking up role information in the application layer. For example: "admin", "owner", "employee".
 - `display_name` &mdash; Human readable name for the Role. Not necessarily unique and optional. For example: "User Administrator", "Project Owner", "Widget  Co. Employee".
 - `description` &mdash; A more detailed explanation of what the Role does. Also optional.
@@ -137,14 +140,17 @@ Create a Permission model inside `app/models/Permission.php` using the following
 ```php
 <?php
 
-use Bbatsche\Entrust\EntrustPermission;
+use Bbatsche\Entrust\Contracts\EntrustPermissionInterface;
+use Bbatsche\Entrust\Traits\EntrustPermissionTrait;
 
-class Permission extends EntrustPermission
+class Permission extends Eloquent implements EntrustPermissionInterface
 {
+    use EntrustPermissionTrait;
 }
 ```
 
 The `Permission` model has the same three attributes as the `Role`:
+
 - `name` &mdash; Unique name for the permission, used for looking up permission information in the application layer. For example: "create-post", "edit-user", "post-payment", "mailing-list-subscribe".
 - `display_name` &mdash; Human readable name for the permission. Not necessarily unique and optional. For example "Create Posts", "Edit Users", "Post Payments", "Subscribe to mailing list".
 - `description` &mdash; A more detailed explanation of the Permission.
@@ -153,16 +159,17 @@ In general, it may be helpful to think of the last two attributes in the form of
 
 #### User
 
-Next, use the `HasRole` trait in your existing `User` model. For example:
+Finally, add the same same traits & role pattern to your user model. For example:
 
 ```php
 <?php
 
-use Bbatsche\Entrust\HasRole;
+use Bbatsche\Entrust\Contracts\EntrustUserInterface;
+use Bbatsche\Entrust\Traits\EntrustUserTrait;
 
-class User extends Eloquent
+class User extends Eloquent implements EntrustUserInterface
 {
-    use HasRole; // add this trait to your user model
+    use EntrustUserTrait;
 
     ...
 }
@@ -177,6 +184,34 @@ composer dump-autoload
 ```
 
 **And you are ready to go.**
+
+#### Non-Standard Table Names
+
+Entrust is configured by default to follow Laravel's naming conventions for table names, so data for your `Role` model is stored in a table called `roles`. If you change these defaults in Entrust's configuration, you need to reflect these changes in your models as well. This can be done simply by adding a constructor like the following:
+
+```php
+// Role model
+
+public function __construct($attr = array())
+{
+    $this->table = Laravel\Config::get('entrust::roles_table');
+    parent::__construct($attr);
+}
+```
+
+```php
+// Permission model
+
+public function __construct($attr = array())
+{
+    parent::__construct($attr);
+    $this->table = Laravel\Config::get('entrust::permissions_table');
+}
+```
+
+#### Role and Permission Classes
+
+For easy of use (and backwards compatibility) Entrust includes abstract classes `Bbatsche\Entrust\EntrustRole` and `Bbatsche\Entrust\EntrustPermission`. Your `Role` and `Permission` models may simply extend these classes which in turn implement their respective interfaces and traits. They also include the aforementioned constructors. Depending on your needs, these may be simpler to implement in your models.
 
 #### Soft Deleting
 
