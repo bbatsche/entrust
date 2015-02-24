@@ -197,7 +197,8 @@ Entrust is configured by default to follow Laravel's naming conventions for tabl
 ```php
 public function __construct($attr = array())
 {
-    $this->table = Laravel\Config::get('entrust::roles_table');
+    $this->table = Config::get('entrust::roles_table');
+    
     parent::__construct($attr);
 }
 ```
@@ -206,8 +207,9 @@ public function __construct($attr = array())
 ```php
 public function __construct($attr = array())
 {
+    $this->table = Config::get('entrust::permissions_table');
+
     parent::__construct($attr);
-    $this->table = Laravel\Config::get('entrust::permissions_table');
 }
 ```
 
