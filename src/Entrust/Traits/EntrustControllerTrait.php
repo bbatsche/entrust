@@ -6,6 +6,7 @@ use Bbatsche\Entrust\EntrustFacade as Entrust;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 trait EntrustControllerTrait
 {
@@ -44,7 +45,12 @@ trait EntrustControllerTrait
             if (is_array($entrustNames)) {
                 $entrustMethod .= $this->entrustRequireAll ? 'All' : 'Any';
 
-                $filterPassed = Entrust::$entrustMethod($entrustNames, $entrustFailed);
+                if (Auth::check()) {
+                    $filterPassed = Entrust::user()->$entrustMethod($entrustNames, $entrustFailed);
+                } else {
+                    $filterPassed = false;
+                    $entrustFailed = $entrustNames;
+                }
             } else {
                 $filterPassed = Entrust::$entrustMethod($entrustNames);
             }
