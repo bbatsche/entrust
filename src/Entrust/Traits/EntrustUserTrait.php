@@ -48,29 +48,50 @@ trait EntrustUserTrait
     public function hasRole($name, $requireAll = false)
     {
         if (is_array($name)) {
-            foreach ($name as $roleName) {
-                $hasRole = $this->hasRole($roleName);
-
-                if ($hasRole && !$requireAll) {
-                    return true;
-                } elseif (!$hasRole && $requireAll) {
-                    return false;
-                }
+            if ($requireAll) {
+                return $this->isAll($name);
+            } else {
+                return $this->isAny($name);
             }
-
-            // If we've made it this far and $requireAll is FALSE, then NONE of the roles were found
-            // If we've made it this far and $requireAll is TRUE, then ALL of the roles were found.
-            // Return the value of $requireAll;
-            return $requireAll;
         } else {
-            foreach ($this->roles as $role) {
-                if ($role->name == $name) {
-                    return true;
-                }
+            return $this->is($name);
+        }
+    }
+
+    public function is($name)
+    {
+        return $this->roles->filter(function($role) use ($name) {
+            return $role->name === $name;
+        })->count() === 1;
+    }
+
+    public function isAny(array $roles, array &$failedRoles = array())
+    {
+        $passed = false;
+
+        foreach ($roles as $roleName) {
+            if ($this->is($roleName)) {
+                $passed = true;
+            } else {
+                $failedRoles[] = $roleName;
             }
         }
 
-        return false;
+        return $passed;
+    }
+
+    public function isAll(array $roles, array &$failedRoles = array())
+    {
+        $passed = true;
+
+        foreach ($roles as $roleName) {
+            if (!$this->is($roleName)) {
+                $passed = false;
+                $failedRoles[] = $roleName;
+            }
+        }
+
+        return $passed;
     }
 
     /**
@@ -83,33 +104,52 @@ trait EntrustUserTrait
      */
     public function can($permission, $requireAll = false)
     {
+        // Attempt to eager load permissions if the roles haven't been loaded already
+        // No trivial way to detect if roles *and* permissions have been loaded, so just assume roles for now
+        if (!array_key_exists('roles', $this->getRelations())) {
+            $this->load('roles.perms');
+        }
+
         if (is_array($permission)) {
-            foreach ($permission as $permName) {
-                $hasPerm = $this->can($permName);
-
-                if ($hasPerm && !$requireAll) {
-                    return true;
-                } elseif (!$hasPerm && $requireAll) {
-                    return false;
-                }
+            if ($requireAll) {
+                return $this->canAll($permission);
+            } else {
+                return $this->canAny($permission);
             }
-
-            // If we've made it this far and $requireAll is FALSE, then NONE of the perms were found
-            // If we've made it this far and $requireAll is TRUE, then ALL of the perms were found.
-            // Return the value of $requireAll;
-            return $requireAll;
         } else {
-            foreach ($this->roles as $role) {
-                // Validate against the Permission table
-                foreach ($role->perms as $perm) {
-                    if ($perm->name == $permission) {
-                        return true;
-                    }
-                }
+            return $this->roles->filter(function($role) use ($permission) {
+                return $role->can($permission);
+            })->count() > 0;
+        }
+    }
+
+    public function canAny($perms, array &$failedPerms = array())
+    {
+        $passed = false;
+
+        foreach ($perms as $permName) {
+            if ($this->can($permName)) {
+                $passed = true;
+            } else {
+                $failedPerms[] = $permName;
             }
         }
 
-        return false;
+        return $passed;
+    }
+
+    public function canAll($perms, array &$failedPerms = array())
+    {
+        $passed = true;
+
+        foreach ($perms as $permName) {
+            if (!$this->can($permName)) {
+                $passed = false;
+                $failedPerms[] = $permName;
+            }
+        }
+
+        return $passed;
     }
 
     /**

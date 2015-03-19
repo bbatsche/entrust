@@ -50,6 +50,42 @@ trait EntrustRoleTrait
         });
     }
 
+    public function can($name)
+    {
+        return $this->perms->filter(function($perm) use ($name) {
+            return $perm->name === $name;
+        })->count() === 1;
+    }
+
+    public function canAny($perms, array &$failedPerms = array())
+    {
+        $passed = false;
+
+        foreach ($perms as $permName) {
+            if ($this->can($permName)) {
+                $passed = true;
+            } else {
+                $failedPerms[] = $permName;
+            }
+        }
+
+        return $passed;
+    }
+
+    public function canAll($perms, array &$failedPerms = array())
+    {
+        $passed = true;
+
+        foreach ($perms as $permName) {
+            if (!$this->can($permName)) {
+                $passed = false;
+                $failedPerms[] = $permName;
+            }
+        }
+
+        return $passed;
+    }
+
     /**
      * Save the inputted permissions.
      *
