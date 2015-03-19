@@ -25,22 +25,29 @@ trait EntrustControllerTrait
 
     public function entrustRoleFilter(Route $route, Request $request)
     {
-        return $this->handleEntrustFilter('entrustRoles', 'entrustRoleCallback', 'hasRole', $route, $request);
+        return $this->handleEntrustFilter('entrustRoles', 'entrustRoleCallback', 'is', $route, $request);
     }
 
     public function handleEntrustFilter($collectionName, $callbackName, $entrustMethod, $route, $request)
     {
         $filterPassed = $this->entrustAllowMissing;
-        $keyName = null;
+        $entrustNames = null;
+        $entrustFailed = array();
 
         list($class, $method) = explode('@', $route->getActionName());
 
         $collection = $this->$collectionName;
 
         if (!empty($collection[$method])) {
-            $keyName = $collection[$method];
+            $entrustNames = $collection[$method];
 
-            $filterPassed = Entrust::$entrustMethod($keyName, $this->entrustRequireAll);
+            if (is_array($entrustNames)) {
+                $entrustMethod .= $this->entrustRequireAll ? 'All' : 'Any';
+
+                $filterPassed = Entrust::$entrustMethod($entrustNames, $entrustFailed);
+            } else {
+                $filterPassed = Entrust::$entrustMethod($entrustNames);
+            }
         }
 
         if (!$filterPassed) {
@@ -56,7 +63,7 @@ trait EntrustControllerTrait
                 App::abort(403);
             }
 
-            return call_user_func($callback, $method, $keyName, $route, $request);
+            return call_user_func($callback, $method, $entrustFailed, $entrustNames, $route, $request);
         }
     }
 }
