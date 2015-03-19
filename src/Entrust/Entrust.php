@@ -44,6 +44,34 @@ class Entrust
         return false;
     }
 
+    public function is($role)
+    {
+        if ($user = $this->user()) {
+            return $user->is($role);
+        }
+
+        return false;
+    }
+
+    public function isAny(array $roles, array &$failedRoles = array())
+    {
+        if ($user = $this->user()) {
+            return $user->isAny($roles, $failedRoles);
+        }
+
+        return false;
+    }
+
+    public function isAll(array $roles, array &$failedRoles = array())
+    {
+        if ($user = $this->user()) {
+            return $user->isAll($roles, $failedRoles);
+        }
+
+        return false;
+    }
+
+
     /**
      * Check if the current user has a permission by its name
      *
@@ -55,6 +83,24 @@ class Entrust
     {
         if ($user = $this->user()) {
             return $user->can($permission, $requireAll);
+        }
+
+        return false;
+    }
+
+    public function canAny($perms, array &$failedPerms = array())
+    {
+        if ($user = $this->user()) {
+            return $user->canAny($perms, $failedPerms);
+        }
+
+        return false;
+    }
+
+    public function canAll($perms, array &$failedPerms = array())
+    {
+        if ($user = $this->user()) {
+            return $user->canAll($perms, $failedPerms);
         }
 
         return false;
