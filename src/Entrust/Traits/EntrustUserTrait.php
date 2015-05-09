@@ -8,16 +8,6 @@ use Symfony\Component\Process\Exception\InvalidArgumentException;
 trait EntrustUserTrait
 {
     /**
-     * Many-to-Many relations with Role.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function roles()
-    {
-        return $this->belongsToMany(Config::get('entrust::role'), Config::get('entrust::role_user_table'), 'user_id', 'role_id');
-    }
-
-    /**
      * Boot the user model
      * Attach event listener to remove the many-to-many records when trying to delete
      * Will NOT delete any records if the user model uses soft deletes.
@@ -38,12 +28,15 @@ trait EntrustUserTrait
     }
 
     /**
-     * Checks if the user has a role by its name.
-     *
-     * @param string|array $name       Role name or array of role names.
-     * @param bool         $requireAll All roles in the array are required.
-     *
-     * @return bool
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::roles()
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Config::get('entrust::role'), Config::get('entrust::role_user_table'), 'user_id', 'role_id');
+    }
+
+    /**
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::hasRole()
      */
     public function hasRole($name, $requireAll = false)
     {
@@ -58,6 +51,9 @@ trait EntrustUserTrait
         }
     }
 
+    /**
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::is()
+     */
     public function is($name)
     {
         return $this->roles->filter(function($role) use ($name) {
@@ -65,7 +61,10 @@ trait EntrustUserTrait
         })->count() === 1;
     }
 
-    public function isAny(array $roles, array &$failedRoles = array())
+    /**
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::isAny()
+     */
+    public function isAny($roles, array &$failedRoles = array())
     {
         $passed = false;
 
@@ -80,7 +79,10 @@ trait EntrustUserTrait
         return $passed;
     }
 
-    public function isAll(array $roles, array &$failedRoles = array())
+    /**
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::isAll()
+     */
+    public function isAll($roles, array &$failedRoles = array())
     {
         $passed = true;
 
@@ -95,12 +97,7 @@ trait EntrustUserTrait
     }
 
     /**
-     * Check if user has a permission by its name.
-     *
-     * @param string|array $permission Permission string or array of permissions.
-     * @param bool         $requireAll All permissions in the array are required.
-     *
-     * @return bool
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::can()
      */
     public function can($permission, $requireAll = false)
     {
@@ -123,6 +120,9 @@ trait EntrustUserTrait
         }
     }
 
+    /**
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::canAny()
+     */
     public function canAny($perms, array &$failedPerms = array())
     {
         $passed = false;
@@ -138,6 +138,9 @@ trait EntrustUserTrait
         return $passed;
     }
 
+    /**
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::canAll()
+     */
     public function canAll($perms, array &$failedPerms = array())
     {
         $passed = true;
@@ -153,15 +156,7 @@ trait EntrustUserTrait
     }
 
     /**
-     * Checks role(s) and permission(s).
-     *
-     * @param string|array $roles       Array of roles or comma separated string
-     * @param string|array $permissions Array of permissions or comma separated string.
-     * @param array        $options     validate_all (true|false) or return_type (boolean|array|both)
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return array|bool
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::ability()
      */
     public function ability($roles, $permissions, $options = array())
     {
@@ -223,11 +218,7 @@ trait EntrustUserTrait
     }
 
     /**
-     * Alias to eloquent many-to-many relation's attach() method.
-     *
-     * @param mixed $role
-     *
-     * @return void
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::attachRole()
      */
     public function attachRole($role)
     {
@@ -243,11 +234,7 @@ trait EntrustUserTrait
     }
 
     /**
-     * Alias to eloquent many-to-many relation's detach() method.
-     *
-     * @param mixed $role
-     *
-     * @return void
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::detachRole()
      */
     public function detachRole($role)
     {
@@ -263,11 +250,7 @@ trait EntrustUserTrait
     }
 
     /**
-     * Attach multiple roles to a user
-     *
-     * @param mixed $roles
-     *
-     * @return void
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::attachRoles()
      */
     public function attachRoles($roles)
     {
@@ -277,11 +260,7 @@ trait EntrustUserTrait
     }
 
     /**
-     * Detach multiple roles from a user
-     *
-     * @param mixed $roles
-     *
-     * @return void
+     * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::detachRoles()
      */
     public function detachRoles($roles)
     {
