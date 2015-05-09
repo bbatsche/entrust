@@ -9,27 +9,6 @@ use Illuminate\Support\Facades\Config;
 trait EntrustRoleTrait
 {
     /**
-     * Many-to-Many relations with the user model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function users()
-    {
-        return $this->belongsToMany(Config::get('auth.model'), Config::get('entrust::role_user_table'));
-    }
-
-    /**
-     * Many-to-Many relations with the permission model.
-     * Named "perms" for backwards compatibility. Also because "perms" is short and sweet.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function perms()
-    {
-        return $this->belongsToMany(Config::get('entrust::permission'), Config::get('entrust::permission_role_table'));
-    }
-
-    /**
      * Boot the role model
      * Attach event listener to remove the many-to-many records when trying to delete
      * Will NOT delete any records if the role model uses soft deletes.
@@ -50,6 +29,25 @@ trait EntrustRoleTrait
         });
     }
 
+    /**
+     * @see \Bbatsche\Entrust\Contracts\EntrustRoleInterface::users()
+     */
+    public function users()
+    {
+        return $this->belongsToMany(Config::get('auth.model'), Config::get('entrust::role_user_table'));
+    }
+
+    /**
+     * @see \Bbatsche\Entrust\Contracts\EntrustRoleInterface::perms()
+     */
+    public function perms()
+    {
+        return $this->belongsToMany(Config::get('entrust::permission'), Config::get('entrust::permission_role_table'));
+    }
+
+    /**
+     * @see \Bbatsche\Entrust\Contracts\EntrustRoleInterface::can()
+     */
     public function can($name)
     {
         return $this->perms->filter(function($perm) use ($name) {
@@ -57,6 +55,9 @@ trait EntrustRoleTrait
         })->count() === 1;
     }
 
+    /**
+     * @see \Bbatsche\Entrust\Contracts\Entrust\RoleInterface::canAny()
+     */
     public function canAny($perms, array &$failedPerms = array())
     {
         $passed = false;
@@ -72,6 +73,9 @@ trait EntrustRoleTrait
         return $passed;
     }
 
+    /**
+     * @see \Bbatsche\Entrust\Contracts\Entrust\RoleInterface::canAll()
+     */
     public function canAll($perms, array &$failedPerms = array())
     {
         $passed = true;
@@ -87,11 +91,7 @@ trait EntrustRoleTrait
     }
 
     /**
-     * Save the inputted permissions.
-     *
-     * @param mixed $inputPermissions
-     *
-     * @return void
+     * @see \Bbatsche\Entrust\Contracts\Entrust\RoleInterface::savePermissions()
      */
     public function savePermissions($inputPermissions)
     {
@@ -103,49 +103,31 @@ trait EntrustRoleTrait
     }
 
     /**
-     * Attach permission to current role.
-     *
-     * @param object|array $permission
-     *
-     * @return void
+     * @see \Bbatsche\Entrust\Contracts\Entrust\RoleInterface::attachPermission()
      */
     public function attachPermission($permission)
     {
-        if (is_object($permission)) {
-            $permission = $permission->getKey();
-        }
+        if (is_object($permission)) $permission = $permission->getKey();
 
-        if (is_array($permission)) {
-            $permission = $permission['id'];
-        }
+        if (is_array($permission))  $permission = $permission['id'];
 
         $this->perms()->attach($permission);
     }
 
     /**
-     * Detach permission form current role.
-     *
-     * @param object|array $permission
-     *
-     * @return void
+     * @see \Bbatsche\Entrust\Contracts\Entrust\RoleInterface::detachPermission()
      */
     public function detachPermission($permission)
     {
-        if (is_object($permission))
-            $permission = $permission->getKey();
+        if (is_object($permission)) $permission = $permission->getKey();
 
-        if (is_array($permission))
-            $permission = $permission['id'];
+        if (is_array($permission))  $permission = $permission['id'];
 
         $this->perms()->detach($permission);
     }
 
     /**
-     * Attach multiple permissions to current role.
-     *
-     * @param mixed $permissions
-     *
-     * @return void
+     * @see \Bbatsche\Entrust\Contracts\Entrust\RoleInterface::attachPermissions()
      */
     public function attachPermissions($permissions)
     {
@@ -155,11 +137,7 @@ trait EntrustRoleTrait
     }
 
     /**
-     * Detach multiple permissions from current role
-     *
-     * @param mixed $permissions
-     *
-     * @return void
+     * @see \Bbatsche\Entrust\Contracts\Entrust\RoleInterface::detachPermissions()
      */
     public function detachPermissions($permissions)
     {
