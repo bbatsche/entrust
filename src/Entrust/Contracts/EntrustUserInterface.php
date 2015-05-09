@@ -5,7 +5,7 @@ namespace Bbatsche\Entrust\Contracts;
 interface EntrustUserInterface
 {
     /**
-     * Many-to-Many relations with Role.
+     * Many-to-Many relations with role model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -17,7 +17,8 @@ interface EntrustUserInterface
      * @param string|array $name       Role name or array of role names.
      * @param bool         $requireAll All roles in the array are required.
      *
-     * @deprecated
+     * @deprecated Replaced by is*() methods.
+     *
      * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::is()
      * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::isAny()
      * @see \Bbatsche\Entrust\Contracts\EntrustUserInterface::isAll()
@@ -35,7 +36,7 @@ interface EntrustUserInterface
      */
     public function is($name);
     /**
-     * Check if user has <b>any</b> named roles.
+     * Check if user has **any** named roles.
      *
      * @param mixed  $roles       Set of role names.
      * @param array &$failedRoles The names of what roles were missing (if any).
@@ -44,7 +45,7 @@ interface EntrustUserInterface
      */
     public function isAny($roles, array &$failedRoles = array());
     /**
-     * Check if user has <b>all</b> named roles.
+     * Check if user has **all** named roles.
      *
      * @param mixed  $roles       Set of role names.
      * @param array &$failedRoles The names of what roles were missing (if any).
@@ -64,7 +65,7 @@ interface EntrustUserInterface
      */
     public function can($permission, $requireAll = false);
     /**
-     * Check if user has <b>any</b> named permissions.
+     * Check if user has **any** named permissions.
      *
      * @param mixed  $perms       Set of permission names.
      * @param array &$failedPerms The names of what permissions were missing (if any).
@@ -73,7 +74,7 @@ interface EntrustUserInterface
      */
     public function canAny($perms, array &$failedPerms = array());
     /**
-     * Check if user has <b>all</b> named permissions.
+     * Check if user has **all** named permissions.
      *
      * @param mixed  $perms       Set of permission names.
      * @param array &$failedPerms The names of what permissions were missing (if any).

@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\Config;
 trait EntrustRoleTrait
 {
     /**
-     * Boot the role model
-     * Attach event listener to remove the many-to-many records when trying to delete
-     * Will NOT delete any records if the role model uses soft deletes.
+     * Boot the role model.
+     *
+     * Attach event listener to remove the many-to-many records when trying to delete,
+     * but will **not** delete any records if the role model uses soft deletes.
      *
      * @return void|bool
      */

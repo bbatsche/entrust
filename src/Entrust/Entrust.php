@@ -31,10 +31,11 @@ class Entrust
     /**
      * Checks if the current user has one or more roles by their name
      *
-     * @param string|array $name       Role name or array of role names.
+     * @param string|array $role       Role name or array of role names.
      * @param bool         $requireAll All roles in the array are required.
      *
-     * @deprecated
+     * @deprecated Replaced by is*() methods.
+     *
      * @see \Bbatsche\Entrust\Entrust::is()
      * @see \Bbatsche\Entrust\Entrust::isAny()
      * @see \Bbatsche\Entrust\Entrust::isAll()
@@ -67,7 +68,7 @@ class Entrust
     }
 
     /**
-     * Check if current user has <b>any</b> named roles.
+     * Check if current user has **any** named roles.
      *
      * @param mixed  $roles       Set of role names.
      * @param array &$failedRoles The names of what roles were missing (if any).
@@ -84,7 +85,7 @@ class Entrust
     }
 
     /**
-     * Check if the current user has <b>all</b> named roles.
+     * Check if the current user has **all** named roles.
      *
      * @param mixed  $roles       Set of role names.
      * @param array &$failedRoles The names of what roles were missing (if any).
@@ -122,7 +123,7 @@ class Entrust
     }
 
     /**
-     * Check if the current user has <b>any</b> named permissions.
+     * Check if the current user has **any** named permissions.
      *
      * @param mixed  $perms       Set of permission names.
      * @param array &$failedPerms The names of what permissions were missing (if any).
@@ -139,7 +140,7 @@ class Entrust
     }
 
     /**
-     * Check if the current user has <b>all</b> named permissions.
+     * Check if the current user has **all** named permissions.
      *
      * @param mixed  $perms       Set of permission names.
      * @param array &$failedPerms The names of what permissions were missing (if any).

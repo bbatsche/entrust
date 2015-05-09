@@ -4,7 +4,10 @@ namespace Bbatsche\Entrust;
 
 /**
  * Maintaining this trait for backwards compatibility.
- * @deprecated
+ *
+ * @deprecated Use \Bbatsche\Entrust\Traits\EntrustUserTrait instead
+ *             as it fits with standard naming convention
+ *
  * @see \Bbatsche\Entrust\Traits\EntrustUserTrait
  */
 trait HasRole

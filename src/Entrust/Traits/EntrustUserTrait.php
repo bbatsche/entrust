@@ -8,9 +8,10 @@ use Symfony\Component\Process\Exception\InvalidArgumentException;
 trait EntrustUserTrait
 {
     /**
-     * Boot the user model
-     * Attach event listener to remove the many-to-many records when trying to delete
-     * Will NOT delete any records if the user model uses soft deletes.
+     * Boot the user model.
+     *
+     * Attach event listener to remove the many-to-many records when trying to delete,
+     * but will **not** delete any records if the user model uses soft deletes.
      *
      * @return void|bool
      */

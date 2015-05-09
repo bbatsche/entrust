@@ -27,7 +27,7 @@ interface EntrustRoleInterface
      */
     public function can($name);
     /**
-     * Check if role is associated with <b>any<b> permission in a set.
+     * Check if role is associated with **any** permission in a set.
      *
      * @param mixed  $perms       Set of permission names.
      * @param array &$failedPerms The names of what permissions were missing (if any).
@@ -35,7 +35,7 @@ interface EntrustRoleInterface
      */
     public function canAny($perms, array &$failedPerms = array());
     /**
-     * Check if role is associated with <b>all</b> permissions in a set.
+     * Check if role is associated with **all** permissions in a set.
      *
      * @param mixed  $perms       Set of permission names.
      * @param array &$failedPerms The names of what permissions were missing (if any).
