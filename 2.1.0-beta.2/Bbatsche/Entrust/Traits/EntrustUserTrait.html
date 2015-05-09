@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Bbatsche\Entrust\Traits\EntrustUserTrait | Entrust API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../traits.html">Traits</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Entrust API</div>
+
+            <div class="type">Trait</div>
+    <h1><a href="../../../Bbatsche/Entrust/Traits.html">Bbatsche\Entrust\Traits</a>\EntrustUserTrait</h1>
+    </div>
+        <div class="content">
+                <p>    trait
+    <strong>EntrustUserTrait</strong></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_roles">roles</a>()
+                    <p>Many-to-Many relations with Role.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    static&nbsp;void|bool
+                </td>
+                <td class="last">
+                    <a href="#method_boot">boot</a>()
+                    <p>Boot the user model Attach event listener to remove the many-to-many records when trying to delete Will NOT delete any records if the user model uses soft deletes.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    bool
+                </td>
+                <td class="last">
+                    <a href="#method_hasRole">hasRole</a>(string|array $name, bool $requireAll = false)
+                    <p>Checks if the user has a role by its name.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_is">is</a>($name)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_isAny">isAny</a>(array $roles, array $failedRoles = array())
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_isAll">isAll</a>(array $roles, array $failedRoles = array())
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    bool
+                </td>
+                <td class="last">
+                    <a href="#method_can">can</a>(string|array $permission, bool $requireAll = false)
+                    <p>Check if user has a permission by its name.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_canAny">canAny</a>($perms, array $failedPerms = array())
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_canAll">canAll</a>($perms, array $failedPerms = array())
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    array|bool
+                </td>
+                <td class="last">
+                    <a href="#method_ability">ability</a>(string|array $roles, string|array $permissions, array $options = array())
+                    <p>Checks role(s) and permission(s).</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method_attachRole">attachRole</a>(mixed $role)
+                    <p>Alias to eloquent many-to-many relation's attach() method.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method_detachRole">detachRole</a>(mixed $role)
+                    <p>Alias to eloquent many-to-many relation's detach() method.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method_attachRoles">attachRoles</a>(mixed $roles)
+                    <p>Attach multiple roles to a user</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method_detachRoles">detachRoles</a>(mixed $roles)
+                    <p>Detach multiple roles from a user</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method_roles">
+        <div class="location">at line 15</div>
+        <code>            public            <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
+    <strong>roles</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Many-to-Many relations with Role.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_boot">
+        <div class="location">at line 27</div>
+        <code>        static    public            void|bool
+    <strong>boot</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Boot the user model Attach event listener to remove the many-to-many records when trying to delete Will NOT delete any records if the user model uses soft deletes.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void|bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_hasRole">
+        <div class="location">at line 48</div>
+        <code>            public            bool
+    <strong>hasRole</strong>(string|array $name, bool $requireAll = false)</code>
+    </h3>
+    <div class="details">
+        <p>Checks if the user has a role by its name.</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string|array</td>
+                <td>$name</td>
+                <td>Role name or array of role names.</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$requireAll</td>
+                <td>All roles in the array are required.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_is">
+        <div class="location">at line 61</div>
+        <code>            public            
+    <strong>is</strong>($name)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$name</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isAny">
+        <div class="location">at line 68</div>
+        <code>            public            
+    <strong>isAny</strong>(array $roles, array $failedRoles = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$roles</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$failedRoles</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isAll">
+        <div class="location">at line 83</div>
+        <code>            public            
+    <strong>isAll</strong>(array $roles, array $failedRoles = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$roles</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$failedRoles</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_can">
+        <div class="location">at line 105</div>
+        <code>            public            bool
+    <strong>can</strong>(string|array $permission, bool $requireAll = false)</code>
+    </h3>
+    <div class="details">
+        <p>Check if user has a permission by its name.</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string|array</td>
+                <td>$permission</td>
+                <td>Permission string or array of permissions.</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$requireAll</td>
+                <td>All permissions in the array are required.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_canAny">
+        <div class="location">at line 126</div>
+        <code>            public            
+    <strong>canAny</strong>($perms, array $failedPerms = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$perms</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$failedPerms</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_canAll">
+        <div class="location">at line 141</div>
+        <code>            public            
+    <strong>canAll</strong>($perms, array $failedPerms = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$perms</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$failedPerms</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_ability">
+        <div class="location">at line 166</div>
+        <code>            public            array|bool
+    <strong>ability</strong>(string|array $roles, string|array $permissions, array $options = array())</code>
+    </h3>
+    <div class="details">
+        <p>Checks role(s) and permission(s).</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string|array</td>
+                <td>$roles</td>
+                <td>Array of roles or comma separated string</td>
+            </tr>
+                    <tr>
+                <td>string|array</td>
+                <td>$permissions</td>
+                <td>Array of permissions or comma separated string.</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>validate<em>all (true|false) or return</em>type (boolean|array|both)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>array|bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/InvalidArgumentException"><abbr title="InvalidArgumentException">InvalidArgumentException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_attachRole">
+        <div class="location">at line 232</div>
+        <code>            public            void
+    <strong>attachRole</strong>(mixed $role)</code>
+    </h3>
+    <div class="details">
+        <p>Alias to eloquent many-to-many relation's attach() method.</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>mixed</td>
+                <td>$role</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_detachRole">
+        <div class="location">at line 252</div>
+        <code>            public            void
+    <strong>detachRole</strong>(mixed $role)</code>
+    </h3>
+    <div class="details">
+        <p>Alias to eloquent many-to-many relation's detach() method.</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>mixed</td>
+                <td>$role</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_attachRoles">
+        <div class="location">at line 272</div>
+        <code>            public            void
+    <strong>attachRoles</strong>(mixed $roles)</code>
+    </h3>
+    <div class="details">
+        <p>Attach multiple roles to a user</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>mixed</td>
+                <td>$roles</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_detachRoles">
+        <div class="location">at line 286</div>
+        <code>            public            void
+    <strong>detachRoles</strong>(mixed $roles)</code>
+    </h3>
+    <div class="details">
+        <p>Detach multiple roles from a user</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>mixed</td>
+                <td>$roles</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Bbatsche\Entrust\Entrust | Entrust API</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../traits.html">Traits</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Entrust API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../Bbatsche/Entrust.html">Bbatsche\Entrust</a>\Entrust</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>Entrust</strong></p>
+
+            <div class="description">
+            <p>This class is the main entry point of entrust.</p>
+            <p>Usually this the interaction
+with this class will be done through the Entrust Facade</p>
+        </div>
+    
+    
+            <h2>Properties</h2>
+
+            <table>
+                    <tr>
+                <td class="type" id="property_app">
+                                                            <abbr title="Illuminate\Foundation\Application">Application</abbr>
+                </td>
+                <td>$app</td>
+                <td class="last">Laravel application</td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<abbr title="Illuminate\Foundation\Application">Application</abbr> $app)
+                    <p>Create a new confide instance.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    bool
+                </td>
+                <td class="last">
+                    <a href="#method_hasRole">hasRole</a>($role, $requireAll = false)
+                    <p>Checks if the current user has a role by its name</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_is">is</a>($role)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_isAny">isAny</a>(array $roles, array $failedRoles = array())
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_isAll">isAll</a>(array $roles, array $failedRoles = array())
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    bool
+                </td>
+                <td class="last">
+                    <a href="#method_can">can</a>($permission, $requireAll = false)
+                    <p>Check if the current user has a permission by its name</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_canAny">canAny</a>($perms, array $failedPerms = array())
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_canAll">canAll</a>($perms, array $failedPerms = array())
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Bbatsche\Entrust\Illuminate\Auth\UserInterface">UserInterface</abbr>|null
+                </td>
+                <td class="last">
+                    <a href="#method_user">user</a>()
+                    <p>Get the currently authenticated user or null.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_routeNeedsRole">routeNeedsRole</a>(string $route, array|string $roles, mixed $result = null, bool $requireAll = true)
+                    <p>Filters a route for a role or set of roles.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_routeNeedsPermission">routeNeedsPermission</a>(string $route, array|string $permissions, mixed $result = null, bool $requireAll = true)
+                    <p>Filters a route for a permission or set of permissions.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method_routeNeedsRoleOrPermission">routeNeedsRoleOrPermission</a>(string $route, array|string $roles, array|string $permissions, mixed $result = null, bool $requireAll = false)
+                    <p>Filters a route for role(s) and/or permission(s).</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 26</div>
+        <code>            public            void
+    <strong>__construct</strong>(<abbr title="Illuminate\Foundation\Application">Application</abbr> $app)</code>
+    </h3>
+    <div class="details">
+        <p>Create a new confide instance.</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Illuminate\Foundation\Application">Application</abbr></td>
+                <td>$app</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_hasRole">
+        <div class="location">at line 38</div>
+        <code>            public            bool
+    <strong>hasRole</strong>($role, $requireAll = false)</code>
+    </h3>
+    <div class="details">
+        <p>Checks if the current user has a role by its name</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$role</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$requireAll</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_is">
+        <div class="location">at line 47</div>
+        <code>            public            
+    <strong>is</strong>($role)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$role</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isAny">
+        <div class="location">at line 56</div>
+        <code>            public            
+    <strong>isAny</strong>(array $roles, array $failedRoles = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$roles</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$failedRoles</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isAll">
+        <div class="location">at line 65</div>
+        <code>            public            
+    <strong>isAll</strong>(array $roles, array $failedRoles = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$roles</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$failedRoles</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_can">
+        <div class="location">at line 82</div>
+        <code>            public            bool
+    <strong>can</strong>($permission, $requireAll = false)</code>
+    </h3>
+    <div class="details">
+        <p>Check if the current user has a permission by its name</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$permission</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$requireAll</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_canAny">
+        <div class="location">at line 91</div>
+        <code>            public            
+    <strong>canAny</strong>($perms, array $failedPerms = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$perms</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$failedPerms</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_canAll">
+        <div class="location">at line 100</div>
+        <code>            public            
+    <strong>canAll</strong>($perms, array $failedPerms = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$perms</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$failedPerms</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_user">
+        <div class="location">at line 114</div>
+        <code>            public            <abbr title="Bbatsche\Entrust\Illuminate\Auth\UserInterface">UserInterface</abbr>|null
+    <strong>user</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the currently authenticated user or null.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Bbatsche\Entrust\Illuminate\Auth\UserInterface">UserInterface</abbr>|null</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_routeNeedsRole">
+        <div class="location">at line 132</div>
+        <code>            public            mixed
+    <strong>routeNeedsRole</strong>(string $route, array|string $roles, mixed $result = null, bool $requireAll = true)</code>
+    </h3>
+    <div class="details">
+        <p>Filters a route for a role or set of roles.</p>
+        <p>If the third parameter is null then abort with status code 403.
+Otherwise the $result is returned.</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$route</td>
+                <td>Route pattern. i.e: "admin/*"</td>
+            </tr>
+                    <tr>
+                <td>array|string</td>
+                <td>$roles</td>
+                <td>The role(s) needed</td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$result</td>
+                <td>i.e: Redirect::to('/')</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$requireAll</td>
+                <td>User must have all roles</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_routeNeedsPermission">
+        <div class="location">at line 166</div>
+        <code>            public            mixed
+    <strong>routeNeedsPermission</strong>(string $route, array|string $permissions, mixed $result = null, bool $requireAll = true)</code>
+    </h3>
+    <div class="details">
+        <p>Filters a route for a permission or set of permissions.</p>
+        <p>If the third parameter is null then abort with status code 403.
+Otherwise the $result is returned.</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$route</td>
+                <td>Route pattern. i.e: "admin/*"</td>
+            </tr>
+                    <tr>
+                <td>array|string</td>
+                <td>$permissions</td>
+                <td>The permission(s) needed</td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$result</td>
+                <td>i.e: Redirect::to('/')</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$requireAll</td>
+                <td>User must have all permissions</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_routeNeedsRoleOrPermission">
+        <div class="location">at line 201</div>
+        <code>            public            void
+    <strong>routeNeedsRoleOrPermission</strong>(string $route, array|string $roles, array|string $permissions, mixed $result = null, bool $requireAll = false)</code>
+    </h3>
+    <div class="details">
+        <p>Filters a route for role(s) and/or permission(s).</p>
+        <p>If the third parameter is null then abort with status code 403.
+Otherwise the $result is returned.</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$route</td>
+                <td>Route pattern. i.e: "admin/*"</td>
+            </tr>
+                    <tr>
+                <td>array|string</td>
+                <td>$roles</td>
+                <td>The role(s) needed</td>
+            </tr>
+                    <tr>
+                <td>array|string</td>
+                <td>$permissions</td>
+                <td>The permission(s) needed</td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$result</td>
+                <td>i.e: Redirect::to('/')</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$requireAll</td>
+                <td>User must have all roles and permissions</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

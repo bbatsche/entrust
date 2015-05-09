@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Bbatsche\Entrust\Traits\EntrustRoleTrait | Entrust API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../traits.html">Traits</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Entrust API</div>
+
+            <div class="type">Trait</div>
+    <h1><a href="../../../Bbatsche/Entrust/Traits.html">Bbatsche\Entrust\Traits</a>\EntrustRoleTrait</h1>
+    </div>
+        <div class="content">
+                <p>    trait
+    <strong>EntrustRoleTrait</strong></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    static&nbsp;void|bool
+                </td>
+                <td class="last">
+                    <a href="#method_boot">boot</a>()
+                    <p>Boot the role model Attach event listener to remove the many-to-many records when trying to delete Will NOT delete any records if the role model uses soft deletes.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_users">users</a>()
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_perms">perms</a>()
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_can">can</a>($name)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_canAny">canAny</a>($perms, array $failedPerms = array())
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_canAll">canAll</a>($perms, array $failedPerms = array())
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_savePermissions">savePermissions</a>($inputPermissions)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_attachPermission">attachPermission</a>($permission)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_detachPermission">detachPermission</a>($permission)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_attachPermissions">attachPermissions</a>($permissions)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_detachPermissions">detachPermissions</a>($permissions)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method_boot">
+        <div class="location">at line 18</div>
+        <code>        static    public            void|bool
+    <strong>boot</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Boot the role model Attach event listener to remove the many-to-many records when trying to delete Will NOT delete any records if the role model uses soft deletes.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void|bool</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_users">
+        <div class="location">at line 35</div>
+        <code>            public            
+    <strong>users</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Bbatsche\Entrust\Contracts\EntrustRoleInterface::users()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_perms">
+        <div class="location">at line 43</div>
+        <code>            public            
+    <strong>perms</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Bbatsche\Entrust\Contracts\EntrustRoleInterface::perms()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_can">
+        <div class="location">at line 51</div>
+        <code>            public            
+    <strong>can</strong>($name)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$name</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Bbatsche\Entrust\Contracts\EntrustRoleInterface::can()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_canAny">
+        <div class="location">at line 61</div>
+        <code>            public            
+    <strong>canAny</strong>($perms, array $failedPerms = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$perms</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$failedPerms</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Bbatsche\Entrust\Contracts\Entrust\RoleInterface::canAny()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_canAll">
+        <div class="location">at line 79</div>
+        <code>            public            
+    <strong>canAll</strong>($perms, array $failedPerms = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$perms</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$failedPerms</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Bbatsche\Entrust\Contracts\Entrust\RoleInterface::canAll()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_savePermissions">
+        <div class="location">at line 96</div>
+        <code>            public            
+    <strong>savePermissions</strong>($inputPermissions)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$inputPermissions</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Bbatsche\Entrust\Contracts\Entrust\RoleInterface::savePermissions()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_attachPermission">
+        <div class="location">at line 108</div>
+        <code>            public            
+    <strong>attachPermission</strong>($permission)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$permission</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Bbatsche\Entrust\Contracts\Entrust\RoleInterface::attachPermission()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_detachPermission">
+        <div class="location">at line 120</div>
+        <code>            public            
+    <strong>detachPermission</strong>($permission)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$permission</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Bbatsche\Entrust\Contracts\Entrust\RoleInterface::detachPermission()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_attachPermissions">
+        <div class="location">at line 132</div>
+        <code>            public            
+    <strong>attachPermissions</strong>($permissions)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$permissions</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Bbatsche\Entrust\Contracts\Entrust\RoleInterface::attachPermissions()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_detachPermissions">
+        <div class="location">at line 142</div>
+        <code>            public            
+    <strong>detachPermissions</strong>($permissions)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$permissions</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>\Bbatsche\Entrust\Contracts\Entrust\RoleInterface::detachPermissions()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>
