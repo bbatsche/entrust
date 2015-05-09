@@ -35,9 +35,9 @@ class Entrust
      * @param bool         $requireAll All roles in the array are required.
      *
      * @deprecated
-     * @see \Bbatsche\Entrust\Entrust\is
-     * @see \Bbatsche\Entrust\Entrust\isAny
-     * @see \Bbatsche\Entrust\Entrust\isAll
+     * @see \Bbatsche\Entrust\Entrust::is()
+     * @see \Bbatsche\Entrust\Entrust::isAny()
+     * @see \Bbatsche\Entrust\Entrust::isAll()
      *
      * @return bool
      */
@@ -69,12 +69,12 @@ class Entrust
     /**
      * Check if current user has <b>any</b> named roles.
      *
-     * @param array  $roles       Array of role names.
+     * @param mixed  $roles       Set of role names.
      * @param array &$failedRoles The names of what roles were missing (if any).
      *
      * @return bool
      */
-    public function isAny(array $roles, array &$failedRoles = array())
+    public function isAny($roles, array &$failedRoles = array())
     {
         if ($user = $this->user()) {
             return $user->isAny($roles, $failedRoles);
@@ -86,12 +86,12 @@ class Entrust
     /**
      * Check if the current user has <b>all</b> named roles.
      *
-     * @param array  $roles       Array of role names.
+     * @param mixed  $roles       Set of role names.
      * @param array &$failedRoles The names of what roles were missing (if any).
      *
      * @return bool
      */
-    public function isAll(array $roles, array &$failedRoles = array())
+    public function isAll($roles, array &$failedRoles = array())
     {
         if ($user = $this->user()) {
             return $user->isAll($roles, $failedRoles);
@@ -107,6 +107,9 @@ class Entrust
      * @param string|array $permission Permission name or array of permission names.
      * @param bool         $requireAll All permissions in the array are required, @deprecated.
      *
+     * @see \Bbatsche\Entrust\Entrust::canAny()
+     * @see \Bbatsche\Entrust\Entrust::canAll()
+     *
      * @return bool
      */
     public function can($permission, $requireAll = false)
@@ -121,12 +124,12 @@ class Entrust
     /**
      * Check if the current user has <b>any</b> named permissions.
      *
-     * @param array  $perms       Array of permission names.
+     * @param mixed  $perms       Set of permission names.
      * @param array &$failedPerms The names of what permissions were missing (if any).
      *
      * @return bool
      */
-    public function canAny(array $perms, array &$failedPerms = array())
+    public function canAny($perms, array &$failedPerms = array())
     {
         if ($user = $this->user()) {
             return $user->canAny($perms, $failedPerms);
@@ -138,12 +141,12 @@ class Entrust
     /**
      * Check if the current user has <b>all</b> named permissions.
      *
-     * @param array  $perms       Array of permission names.
+     * @param mixed  $perms       Set of permission names.
      * @param array &$failedPerms The names of what permissions were missing (if any).
      *
      * @return bool
      */
-    public function canAll(array $perms, array &$failedPerms = array())
+    public function canAll($perms, array &$failedPerms = array())
     {
         if ($user = $this->user()) {
             return $user->canAll($perms, $failedPerms);
