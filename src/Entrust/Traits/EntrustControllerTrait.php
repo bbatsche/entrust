@@ -28,10 +28,10 @@ trait EntrustControllerTrait
         return $this->handleEntrustFilter('entrustRoles', 'entrustRoleCallback', 'is', $route, $request);
     }
 
-    public function handleEntrustFilter($collectionName, $callbackName, $entrustMethod, $route, $request)
+    private function handleEntrustFilter($collectionName, $callbackName, $entrustMethod, $route, $request)
     {
-        $filterPassed = $this->entrustAllowMissing;
-        $entrustNames = null;
+        $filterPassed  = $this->entrustAllowMissing;
+        $entrustNames  = null;
         $entrustFailed = array();
 
         list($class, $method) = explode('@', $route->getActionName());
