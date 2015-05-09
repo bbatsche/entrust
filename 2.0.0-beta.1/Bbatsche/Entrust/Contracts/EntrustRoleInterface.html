@@ -1,156 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="robots" content="index, follow, all" />
-        <title>Bbatsche\Entrust\Contracts\EntrustRoleInterface | Entrust API</title>
-                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
-                            </head>
-        <body id="class">
-            <div class="header">
-        <ul>
-            <li><a href="../../../classes.html">Classes</a></li>
-                            <li><a href="../../../namespaces.html">Namespaces</a></li>
-                        <li><a href="../../../interfaces.html">Interfaces</a></li>
-            <li><a href="../../../traits.html">Traits</a></li>
-            <li><a href="../../../doc-index.html">Index</a></li>
-            
-        </ul>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Bbatsche\Entrust\Contracts\EntrustRoleInterface | Entrust API</title>
 
-        <div id="title">Entrust API</div>
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+    
+    
+    </head>
 
-            <div class="type">Interface</div>
-    <h1><a href="../../../Bbatsche/Entrust/Contracts.html">Bbatsche\Entrust\Contracts</a>\EntrustRoleInterface</h1>
+    <body id="class" data-name="class:Bbatsche_Entrust_Contracts_EntrustRoleInterface" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
     </div>
-        <div class="content">
-                <p>    interface
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Entrust API</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">interface</span></li>
+                                                            <li><a href="../../../Bbatsche.html">Bbatsche</a></li>
+                                        <li><a href="../../../Bbatsche/Entrust.html">Entrust</a></li>
+                                        <li><a href="../../../Bbatsche/Entrust/Contracts.html">Contracts</a></li>
+    
+                <li>EntrustRoleInterface</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>EntrustRoleInterface</h1>
+    </div>
+
+    <p>    interface
     <strong>EntrustRoleInterface</strong></p>
 
     
     
     
+    
             <h2>Methods</h2>
 
-            <table>
-                    <tr>
-                <td class="type">
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
                     <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
-                </td>
-                <td class="last">
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_users">users</a>()
-                    <p>Many-to-Many relations with the user model.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
+                                            <p>Many-to-Many relations with the user model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
-                </td>
-                <td class="last">
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_perms">perms</a>()
-                    <p>Many-to-Many relations with the permission model.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
+                                            <p>Many-to-Many relations with the permission model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     bool
-                </td>
-                <td class="last">
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_can">can</a>(string $name)
-                    <p>Check if role is associated with a permission by name</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
+                                            <p>Check if role is associated with a permission by name</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     void
-                </td>
-                <td class="last">
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_canAny">canAny</a>(mixed $perms, array $failedPerms = array())
-                    <p>Check if role is associated with <b>any<b> permission in a set.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
+                                            <p>Check if role is associated with <strong>any</strong> permission in a set.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     void
-                </td>
-                <td class="last">
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_canAll">canAll</a>(mixed $perms, array $failedPerms = array())
-                    <p>Check if role is associated with <b>all</b> permissions in a set.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
+                                            <p>Check if role is associated with <strong>all</strong> permissions in a set.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     void
-                </td>
-                <td class="last">
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_savePermissions">savePermissions</a>(mixed $inputPermissions)
-                    <p>Save the inputted permissions.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
+                                            <p>Save the inputted permissions.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     void
-                </td>
-                <td class="last">
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_attachPermission">attachPermission</a>(object|array $permission)
-                    <p>Attach permission to current role.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
+                                            <p>Attach permission to current role.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     void
-                </td>
-                <td class="last">
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_detachPermission">detachPermission</a>(object|array $permission)
-                    <p>Detach permission form current role.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
+                                            <p>Detach permission form current role.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     void
-                </td>
-                <td class="last">
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_attachPermissions">attachPermissions</a>(mixed $permissions)
-                    <p>Attach multiple permissions to current role.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
+                                            <p>Attach multiple permissions to current role.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     void
-                </td>
-                <td class="last">
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_detachPermissions">detachPermissions</a>(mixed $permissions)
-                    <p>Detach multiple permissions from current role</p>
-                </td>
-                <td></td>
-            </tr>
-            </table>
+                                            <p>Detach multiple permissions from current role</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
 
 
         <h2>Details</h2>
 
-                        <h3 id="method_users">
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_users">
         <div class="location">at line 12</div>
-        <code>            public            <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
+        <code>                    <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
     <strong>users</strong>()</code>
     </h3>
     <div class="details">
-        <p>Many-to-Many relations with the user model.</p>
-        <p>
-</p>
-        <div class="tags">
+                    <div class="method-description">
+                                    <p>Many-to-Many relations with the user model.</p>                                </div>
+                <div class="tags">
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td><abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr></td>
             <td>
@@ -163,19 +205,21 @@
                     </div>
     </div>
 
-                <h3 id="method_perms">
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_perms">
         <div class="location">at line 19</div>
-        <code>            public            <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
+        <code>                    <abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr>
     <strong>perms</strong>()</code>
     </h3>
     <div class="details">
-        <p>Many-to-Many relations with the permission model.</p>
-        <p>Named "perms" for backwards compatibility. Also because "perms" is short and sweet.</p>
-        <div class="tags">
+                    <div class="method-description">
+                                    <p>Many-to-Many relations with the permission model.</p>                    <p>Named "perms" for backwards compatibility. Also because "perms" is short and sweet.</p>            </div>
+                <div class="tags">
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td><abbr title="Illuminate\Database\Eloquent\Relations\BelongsToMany">BelongsToMany</abbr></td>
             <td>
@@ -188,19 +232,20 @@
                     </div>
     </div>
 
-                <h3 id="method_can">
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_can">
         <div class="location">at line 28</div>
-        <code>            public            bool
+        <code>                    bool
     <strong>can</strong>(string $name)</code>
     </h3>
     <div class="details">
-        <p>Check if role is associated with a permission by name</p>
-        <p>
-</p>
-        <div class="tags">
+                    <div class="method-description">
+                                    <p>Check if role is associated with a permission by name</p>                                </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td>string</td>
                 <td>$name</td>
@@ -211,7 +256,7 @@
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>bool</td>
             <td>
@@ -224,19 +269,20 @@
                     </div>
     </div>
 
-                <h3 id="method_canAny">
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_canAny">
         <div class="location">at line 36</div>
-        <code>            public            void
+        <code>                    void
     <strong>canAny</strong>(mixed $perms, array $failedPerms = array())</code>
     </h3>
     <div class="details">
-        <p>Check if role is associated with <b>any<b> permission in a set.</p>
-        <p>
-</p>
-        <div class="tags">
+                    <div class="method-description">
+                                    <p>Check if role is associated with <strong>any</strong> permission in a set.</p>                                </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td>mixed</td>
                 <td>$perms</td>
@@ -245,14 +291,14 @@
                     <tr>
                 <td>array</td>
                 <td>$failedPerms</td>
-                <td>The names of what permissions were missing (if any).</td>
+                <td>&amp;$failedPerms The names of what permissions were missing (if any).</td>
             </tr>
             </table>
 
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>void</td>
             <td>
@@ -265,19 +311,20 @@
                     </div>
     </div>
 
-                <h3 id="method_canAll">
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_canAll">
         <div class="location">at line 44</div>
-        <code>            public            void
+        <code>                    void
     <strong>canAll</strong>(mixed $perms, array $failedPerms = array())</code>
     </h3>
     <div class="details">
-        <p>Check if role is associated with <b>all</b> permissions in a set.</p>
-        <p>
-</p>
-        <div class="tags">
+                    <div class="method-description">
+                                    <p>Check if role is associated with <strong>all</strong> permissions in a set.</p>                                </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td>mixed</td>
                 <td>$perms</td>
@@ -286,14 +333,14 @@
                     <tr>
                 <td>array</td>
                 <td>$failedPerms</td>
-                <td>The names of what permissions were missing (if any).</td>
+                <td>&amp;$failedPerms The names of what permissions were missing (if any).</td>
             </tr>
             </table>
 
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>void</td>
             <td>
@@ -306,19 +353,20 @@
                     </div>
     </div>
 
-                <h3 id="method_savePermissions">
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_savePermissions">
         <div class="location">at line 53</div>
-        <code>            public            void
+        <code>                    void
     <strong>savePermissions</strong>(mixed $inputPermissions)</code>
     </h3>
     <div class="details">
-        <p>Save the inputted permissions.</p>
-        <p>
-</p>
-        <div class="tags">
+                    <div class="method-description">
+                                    <p>Save the inputted permissions.</p>                                </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td>mixed</td>
                 <td>$inputPermissions</td>
@@ -330,7 +378,7 @@
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>void</td>
             <td>
@@ -343,19 +391,20 @@
                     </div>
     </div>
 
-                <h3 id="method_attachPermission">
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_attachPermission">
         <div class="location">at line 61</div>
-        <code>            public            void
+        <code>                    void
     <strong>attachPermission</strong>(object|array $permission)</code>
     </h3>
     <div class="details">
-        <p>Attach permission to current role.</p>
-        <p>
-</p>
-        <div class="tags">
+                    <div class="method-description">
+                                    <p>Attach permission to current role.</p>                                </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td>object|array</td>
                 <td>$permission</td>
@@ -367,7 +416,7 @@
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>void</td>
             <td>
@@ -380,19 +429,20 @@
                     </div>
     </div>
 
-                <h3 id="method_detachPermission">
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_detachPermission">
         <div class="location">at line 69</div>
-        <code>            public            void
+        <code>                    void
     <strong>detachPermission</strong>(object|array $permission)</code>
     </h3>
     <div class="details">
-        <p>Detach permission form current role.</p>
-        <p>
-</p>
-        <div class="tags">
+                    <div class="method-description">
+                                    <p>Detach permission form current role.</p>                                </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td>object|array</td>
                 <td>$permission</td>
@@ -404,7 +454,7 @@
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>void</td>
             <td>
@@ -417,19 +467,20 @@
                     </div>
     </div>
 
-                <h3 id="method_attachPermissions">
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_attachPermissions">
         <div class="location">at line 77</div>
-        <code>            public            void
+        <code>                    void
     <strong>attachPermissions</strong>(mixed $permissions)</code>
     </h3>
     <div class="details">
-        <p>Attach multiple permissions to current role.</p>
-        <p>
-</p>
-        <div class="tags">
+                    <div class="method-description">
+                                    <p>Attach multiple permissions to current role.</p>                                </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td>mixed</td>
                 <td>$permissions</td>
@@ -441,7 +492,7 @@
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>void</td>
             <td>
@@ -454,19 +505,20 @@
                     </div>
     </div>
 
-                <h3 id="method_detachPermissions">
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_detachPermissions">
         <div class="location">at line 85</div>
-        <code>            public            void
+        <code>                    void
     <strong>detachPermissions</strong>(mixed $permissions)</code>
     </h3>
     <div class="details">
-        <p>Detach multiple permissions from current role</p>
-        <p>
-</p>
-        <div class="tags">
+                    <div class="method-description">
+                                    <p>Detach multiple permissions from current role</p>                                </div>
+                <div class="tags">
                             <h4>Parameters</h4>
 
-                    <table>
+                    <table class="table table-condensed">
                     <tr>
                 <td>mixed</td>
                 <td>$permissions</td>
@@ -478,7 +530,7 @@
             
                             <h4>Return Value</h4>
 
-                    <table>
+                    <table class="table table-condensed">
         <tr>
             <td>void</td>
             <td>
@@ -491,10 +543,17 @@
                     </div>
     </div>
 
+            </div>
+            </div>
+
     
             </div>
-            <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
     </div>
     </body>
+
 </html>

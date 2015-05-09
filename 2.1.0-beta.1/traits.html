@@ -1,67 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="robots" content="index, follow, all" />
-        <title>Traits | Entrust API</title>
-                    <link rel="stylesheet" type="text/css" href="stylesheet.css">
-                            </head>
-        <body id="overview">
-            <div class="header">
-        <ul>
-            <li><a href="classes.html">Classes</a></li>
-                            <li><a href="namespaces.html">Namespaces</a></li>
-                        <li><a href="interfaces.html">Interfaces</a></li>
-            <li><a href="traits.html">Traits</a></li>
-            <li><a href="doc-index.html">Index</a></li>
-            
-        </ul>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Traits | Entrust API</title>
 
-        <div id="title">Entrust API</div>
+            <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/sami.css">
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/typeahead.min.js"></script>
+        <script src="sami.js"></script>
+    
+    
+    </head>
 
-            <h1>Traits</h1>
+    <body id="traits" data-name="" data-root-path="">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#" method="GET">
+                <select id="version-switcher" name="version">
+                                            <option value="../master/index.html">master branch</option>
+                                            <option value="../2.0.0-beta.1/index.html">2.0.0-beta.1</option>
+                                            <option value="../2.0.0-beta.2/index.html">2.0.0-beta.2</option>
+                                            <option value="../2.0.0/index.html">2.0.0</option>
+                                            <option value="../2.0.1/index.html">2.0.1</option>
+                                            <option value="../2.0.2/index.html">2.0.2</option>
+                                            <option value="../2.1.0-beta.1/index.html" selected>2.1.0-beta.1</option>
+                                            <option value="../2.1.0-beta.2/index.html">2.1.0-beta.2</option>
+                                            <option value="../2.1.0-beta.3/index.html">2.1.0-beta.3</option>
+                                    </select>
+            </form>
+                <form id="search-form" action="search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
     </div>
-        <div class="content">
-                <table>
-                                                                                                                                                                                                    <tr>
-                    <td>
-                        <a href="Bbatsche/Entrust/HasRole.html" target="main"><abbr title="Bbatsche\Entrust\HasRole">Bbatsche\Entrust\HasRole</abbr></a>
-                    </td>
-                    <td>
-                        Maintaining this trait for backwards compatibility.
-                    </td>
-                </tr>
-                                                                    <tr>
-                    <td>
-                        <a href="Bbatsche/Entrust/Traits/EntrustPermissionTrait.html" target="main"><abbr title="Bbatsche\Entrust\Traits\EntrustPermissionTrait">Bbatsche\Entrust\Traits\EntrustPermissionTrait</abbr></a>
-                    </td>
-                    <td>
-                        
 
-                    </td>
-                </tr>
-                                                <tr>
-                    <td>
-                        <a href="Bbatsche/Entrust/Traits/EntrustRoleTrait.html" target="main"><abbr title="Bbatsche\Entrust\Traits\EntrustRoleTrait">Bbatsche\Entrust\Traits\EntrustRoleTrait</abbr></a>
-                    </td>
-                    <td>
-                        
+                <div id="api-tree"></div>
 
-                    </td>
-                </tr>
-                                                <tr>
-                    <td>
-                        <a href="Bbatsche/Entrust/Traits/EntrustUserTrait.html" target="main"><abbr title="Bbatsche\Entrust\Traits\EntrustUserTrait">Bbatsche\Entrust\Traits\EntrustUserTrait</abbr></a>
-                    </td>
-                    <td>
-                        
-
-                    </td>
-                </tr>
-                        </table>
         </div>
-            <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Entrust API</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="classes.html">Classes</a></li>
+                                            <li><a href="namespaces.html">Namespaces</a></li>
+                                        <li><a href="interfaces.html">Interfaces</a></li>
+                    <li><a href="traits.html">Traits</a></li>
+                    <li><a href="doc-index.html">Index</a></li>
+                    <li><a href="search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div id="page-content">
+                    <div class="page-header">
+        <h1>Traits</h1>
+    </div>
+
+    <div class="container-fluid underlined">
+                                                                                                                                                                                                    <div class="row">
+                    <div class="col-md-6">
+                        <a href="Bbatsche/Entrust/HasRole.html"><abbr title="Bbatsche\Entrust\HasRole">Bbatsche\Entrust\HasRole</abbr></a>
+                    </div>
+                    <div class="col-md-6">
+                        Maintaining this trait for backwards compatibility.
+                    </div>
+                </div>
+                                                                    <div class="row">
+                    <div class="col-md-6">
+                        <a href="Bbatsche/Entrust/Traits/EntrustPermissionTrait.html"><abbr title="Bbatsche\Entrust\Traits\EntrustPermissionTrait">Bbatsche\Entrust\Traits\EntrustPermissionTrait</abbr></a>
+                    </div>
+                    <div class="col-md-6">
+                        
+
+                    </div>
+                </div>
+                                                <div class="row">
+                    <div class="col-md-6">
+                        <a href="Bbatsche/Entrust/Traits/EntrustRoleTrait.html"><abbr title="Bbatsche\Entrust\Traits\EntrustRoleTrait">Bbatsche\Entrust\Traits\EntrustRoleTrait</abbr></a>
+                    </div>
+                    <div class="col-md-6">
+                        
+
+                    </div>
+                </div>
+                                                <div class="row">
+                    <div class="col-md-6">
+                        <a href="Bbatsche/Entrust/Traits/EntrustUserTrait.html"><abbr title="Bbatsche\Entrust\Traits\EntrustUserTrait">Bbatsche\Entrust\Traits\EntrustUserTrait</abbr></a>
+                    </div>
+                    <div class="col-md-6">
+                        
+
+                    </div>
+                </div>
+                        </div>
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
     </div>
     </body>
+
 </html>
