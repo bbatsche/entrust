@@ -17,7 +17,7 @@ class Entrust
     public $app;
 
     /**
-     * Create a new confide instance.
+     * Create a new Entrust instance.
      *
      * @param \Illuminate\Foundation\Application $app
      *
@@ -29,9 +29,15 @@ class Entrust
     }
 
     /**
-     * Checks if the current user has a role by its name
+     * Checks if the current user has one or more roles by their name
      *
-     * @param string $name Role name.
+     * @param string|array $name       Role name or array of role names.
+     * @param bool         $requireAll All roles in the array are required.
+     *
+     * @deprecated
+     * @see \Bbatsche\Entrust\Entrust\is
+     * @see \Bbatsche\Entrust\Entrust\isAny
+     * @see \Bbatsche\Entrust\Entrust\isAll
      *
      * @return bool
      */
@@ -44,6 +50,13 @@ class Entrust
         return false;
     }
 
+    /**
+     * Check if current user has a role by its name
+     *
+     * @param string $role Role name.
+     *
+     * @return bool
+     */
     public function is($role)
     {
         if ($user = $this->user()) {
@@ -53,6 +66,14 @@ class Entrust
         return false;
     }
 
+    /**
+     * Check if current user has <b>any</b> named roles.
+     *
+     * @param array  $roles       Array of role names.
+     * @param array &$failedRoles The names of what roles were missing (if any).
+     *
+     * @return bool
+     */
     public function isAny(array $roles, array &$failedRoles = array())
     {
         if ($user = $this->user()) {
@@ -62,6 +83,14 @@ class Entrust
         return false;
     }
 
+    /**
+     * Check if the current user has <b>all</b> named roles.
+     *
+     * @param array  $roles       Array of role names.
+     * @param array &$failedRoles The names of what roles were missing (if any).
+     *
+     * @return bool
+     */
     public function isAll(array $roles, array &$failedRoles = array())
     {
         if ($user = $this->user()) {
@@ -71,11 +100,12 @@ class Entrust
         return false;
     }
 
-
     /**
-     * Check if the current user has a permission by its name
+     * Check if the current user has a permission by its name.
+     * Using this function with an array of roles is considered @deprecated.
      *
-     * @param string $permission Permission string.
+     * @param string|array $permission Permission name or array of permission names.
+     * @param bool         $requireAll All permissions in the array are required, @deprecated.
      *
      * @return bool
      */
@@ -88,7 +118,15 @@ class Entrust
         return false;
     }
 
-    public function canAny($perms, array &$failedPerms = array())
+    /**
+     * Check if the current user has <b>any</b> named permissions.
+     *
+     * @param array  $perms       Array of permission names.
+     * @param array &$failedPerms The names of what permissions were missing (if any).
+     *
+     * @return bool
+     */
+    public function canAny(array $perms, array &$failedPerms = array())
     {
         if ($user = $this->user()) {
             return $user->canAny($perms, $failedPerms);
@@ -97,7 +135,15 @@ class Entrust
         return false;
     }
 
-    public function canAll($perms, array &$failedPerms = array())
+    /**
+     * Check if the current user has <b>all</b> named permissions.
+     *
+     * @param array  $perms       Array of permission names.
+     * @param array &$failedPerms The names of what permissions were missing (if any).
+     *
+     * @return bool
+     */
+    public function canAll(array $perms, array &$failedPerms = array())
     {
         if ($user = $this->user()) {
             return $user->canAll($perms, $failedPerms);
