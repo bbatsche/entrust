@@ -3,6 +3,7 @@
 use Bbatsche\Entrust\Contracts\EntrustUserInterface;
 use Bbatsche\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\Process\Exception\InvalidArgumentException;
 use Mockery as m;
 
@@ -86,6 +87,31 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($user->hasRole(['AnyRole3', 'AnyRole4']));
         $this->assertTrue($user->hasRole('SingleRole1'));
         $this->assertFalse($user->hasRole('SingleRole2'));
+    }
+
+    public function testIs()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $roleA = $this->mockRole('RoleA');
+        $roleB = $this->mockRole('RoleB');
+
+        $user = new HasRoleUser();
+        $user->roles = new Collection([$roleA, $roleB]);
+
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $this->assertTrue($user->is('RoleB'));
+        $this->assertFalse($user->is('RoleC'));
     }
 
     public function testCan()
