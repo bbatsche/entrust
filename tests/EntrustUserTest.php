@@ -158,6 +158,51 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $this->assertContains('RoleD', $failedRoles);
     }
 
+    public function testIsAll()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $user = m::mock('HasRoleUser')->makePartial();
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $user->shouldReceive('is')->with('RoleA')->andReturn(true)->twice();
+        $user->shouldReceive('is')->with('RoleB')->andReturn(true)->once();
+        $user->shouldReceive('is')->with('RoleC')->andReturn(false)->twice();
+        $user->shouldReceive('is')->with('RoleD')->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $failedRoles = array();
+        $this->assertTrue($user->isAll(['RoleA', 'RoleB'], $failedRoles));
+        $this->assertInternalType('array', $failedRoles);
+        $this->assertEmpty($failedRoles);
+
+        $failedRoles = array();
+        $this->assertFalse($user->isAll(['RoleA', 'RoleC'], $failedRoles));
+        $this->assertInternalType('array', $failedRoles);
+        $this->assertContains('RoleC', $failedRoles);
+        $this->assertNotContains('RoleA', $failedRoles);
+
+        $failedRoles = array();
+        $this->assertFalse($user->isAll(['RoleC', 'RoleD'], $failedRoles));
+        $this->assertInternalType('array', $failedRoles);
+        $this->assertContains('RoleC', $failedRoles);
+        $this->assertContains('RoleD', $failedRoles);
+    }
+
     public function testCan()
     {
         /*
