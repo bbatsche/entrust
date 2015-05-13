@@ -103,7 +103,6 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $user = new HasRoleUser();
         $user->roles = new Collection([$roleA, $roleB]);
 
-
         /*
         |------------------------------------------------------------
         | Assertion
@@ -112,6 +111,51 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($user->is('RoleB'));
         $this->assertFalse($user->is('RoleC'));
+    }
+
+    public function testIsAny()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $user = m::mock('HasRoleUser')->makePartial();
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $user->shouldReceive('is')->with('RoleA')->andReturn(true)->twice();
+        $user->shouldReceive('is')->with('RoleB')->andReturn(true)->once();
+        $user->shouldReceive('is')->with('RoleC')->andReturn(false)->twice();
+        $user->shouldReceive('is')->with('RoleD')->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $failedRoles = array();
+        $this->assertTrue($user->isAny(['RoleA', 'RoleB'], $failedRoles));
+        $this->assertInternalType('array', $failedRoles);
+        $this->assertEmpty($failedRoles);
+
+        $failedRoles = array();
+        $this->assertTrue($user->isAny(['RoleA', 'RoleC'], $failedRoles));
+        $this->assertInternalType('array', $failedRoles);
+        $this->assertContains('RoleC', $failedRoles);
+        $this->assertNotContains('RoleA', $failedRoles);
+
+        $failedRoles = array();
+        $this->assertFalse($user->isAny(['RoleC', 'RoleD'], $failedRoles));
+        $this->assertInternalType('array', $failedRoles);
+        $this->assertContains('RoleC', $failedRoles);
+        $this->assertContains('RoleD', $failedRoles);
     }
 
     public function testCan()
