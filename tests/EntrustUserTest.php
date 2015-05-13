@@ -58,25 +58,34 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         | Set
         |------------------------------------------------------------
         */
-        $roleA = $this->mockRole('RoleA');
-        $roleB = $this->mockRole('RoleB');
 
-        $user = new HasRoleUser();
-        $user->roles = [$roleA, $roleB];
+        $user = m::mock('HasRoleUser')->makePartial();
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $user->shouldReceive('isAll')->with(['AllRole1', 'AllRole2'])->andReturn(true)->once();
+        $user->shouldReceive('isAll')->with(['AllRole3', 'AllRole4'])->andReturn(false)->once();
+        $user->shouldReceive('isAny')->with(['AnyRole1', 'AnyRole2'])->andReturn(true)->once();
+        $user->shouldReceive('isAny')->with(['AnyRole3', 'AnyRole4'])->andReturn(false)->once();
+        $user->shouldReceive('is')->with('SingleRole1')->andReturn(true)->once();
+        $user->shouldReceive('is')->with('SingleRole2')->andReturn(false)->once();
 
         /*
         |------------------------------------------------------------
         | Assertion
         |------------------------------------------------------------
         */
-        $this->assertTrue($user->hasRole('RoleA'));
-        $this->assertTrue($user->hasRole('RoleB'));
-        $this->assertFalse($user->hasRole('RoleC'));
 
-        $this->assertTrue($user->hasRole(['RoleA', 'RoleB']));
-        $this->assertTrue($user->hasRole(['RoleA', 'RoleC']));
-        $this->assertFalse($user->hasRole(['RoleA', 'RoleC'], true));
-        $this->assertFalse($user->hasRole(['RoleC', 'RoleD']));
+        $this->assertTrue($user->hasRole(['AllRole1', 'AllRole2'], true));
+        $this->assertFalse($user->hasRole(['AllRole3', 'AllRole4'], true));
+        $this->assertTrue($user->hasRole(['AnyRole1', 'AnyRole2']));
+        $this->assertFalse($user->hasRole(['AnyRole3', 'AnyRole4']));
+        $this->assertTrue($user->hasRole('SingleRole1'));
+        $this->assertFalse($user->hasRole('SingleRole2'));
     }
 
     public function testCan()
