@@ -9,6 +9,8 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
+         reportUselessTests="true"
+         strictCoverage="true"
 >
     <testsuites>
         <testsuite name="Package Test Suite">
