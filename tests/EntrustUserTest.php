@@ -357,18 +357,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $nonUserRoleNameA = 'NonUserRoleA';
         $nonUserRoleNameB = 'NonUserRoleB';
 
-        $permA = $this->mockPermission($userPermNameA);
-        $permB = $this->mockPermission($userPermNameB);
-        $permC = $this->mockPermission($userPermNameC);
-
-        $roleA = $this->mockRole($userRoleNameA);
-        $roleB = $this->mockRole($userRoleNameB);
-
-        $roleA->perms = [$permA];
-        $roleB->perms = [$permB, $permC];
-
         $user = m::mock('HasRoleUser')->makePartial();
-        $user->roles = [$roleA, $roleB];
 
         /*
         |------------------------------------------------------------
@@ -376,16 +365,16 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         |------------------------------------------------------------
         */
         $user->shouldReceive('hasRole')
-            ->with(m::anyOf($userRoleNameA, $userRoleNameB), m::anyOf(true, false))
+            ->with(m::anyOf($userRoleNameA, $userRoleNameB))
             ->andReturn(true);
         $user->shouldReceive('hasRole')
-            ->with(m::anyOf($nonUserRoleNameA, $nonUserRoleNameB), m::anyOf(true, false))
+            ->with(m::anyOf($nonUserRoleNameA, $nonUserRoleNameB))
             ->andReturn(false);
         $user->shouldReceive('can')
-            ->with(m::anyOf($userPermNameA, $userPermNameB, $userPermNameC), m::anyOf(true, false))
+            ->with(m::anyOf($userPermNameA, $userPermNameB, $userPermNameC))
             ->andReturn(true);
         $user->shouldReceive('can')
-            ->with(m::anyOf($nonUserPermNameA, $nonUserPermNameB), m::anyOf(true, false))
+            ->with(m::anyOf($nonUserPermNameA, $nonUserPermNameB))
             ->andReturn(false);
 
         /*
@@ -471,18 +460,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $nonUserRoleNameA = 'NonUserRoleA';
         $nonUserRoleNameB = 'NonUserRoleB';
 
-        $permA = $this->mockPermission($userPermNameA);
-        $permB = $this->mockPermission($userPermNameB);
-        $permC = $this->mockPermission($userPermNameC);
-
-        $roleA = $this->mockRole($userRoleNameA);
-        $roleB = $this->mockRole($userRoleNameB);
-
-        $roleA->perms = [$permA];
-        $roleB->perms = [$permB, $permC];
-
         $user = m::mock('HasRoleUser')->makePartial();
-        $user->roles = [$roleA, $roleB];
 
         /*
         |------------------------------------------------------------
@@ -490,16 +468,16 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         |------------------------------------------------------------
         */
         $user->shouldReceive('hasRole')
-            ->with(m::anyOf($userRoleNameA, $userRoleNameB), m::anyOf(true, false))
+            ->with(m::anyOf($userRoleNameA, $userRoleNameB))
             ->andReturn(true);
         $user->shouldReceive('hasRole')
-            ->with(m::anyOf($nonUserRoleNameA, $nonUserRoleNameB), m::anyOf(true, false))
+            ->with(m::anyOf($nonUserRoleNameA, $nonUserRoleNameB))
             ->andReturn(false);
         $user->shouldReceive('can')
-            ->with(m::anyOf($userPermNameA, $userPermNameB, $userPermNameC), m::anyOf(true, false))
+            ->with(m::anyOf($userPermNameA, $userPermNameB, $userPermNameC))
             ->andReturn(true);
         $user->shouldReceive('can')
-            ->with(m::anyOf($nonUserPermNameA, $nonUserPermNameB), m::anyOf(true, false))
+            ->with(m::anyOf($nonUserPermNameA, $nonUserPermNameB))
             ->andReturn(false);
 
         /*
@@ -624,18 +602,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $nonUserRoleNameA = 'NonUserRoleA';
         $nonUserRoleNameB = 'NonUserRoleB';
 
-        $permA = $this->mockPermission($userPermNameA);
-        $permB = $this->mockPermission($userPermNameB);
-        $permC = $this->mockPermission($userPermNameC);
-
-        $roleA = $this->mockRole($userRoleNameA);
-        $roleB = $this->mockRole($userRoleNameB);
-
-        $roleA->perms = [$permA];
-        $roleB->perms = [$permB, $permC];
-
         $user = m::mock('HasRoleUser')->makePartial();
-        $user->roles = [$roleA, $roleB];
 
         /*
         |------------------------------------------------------------
@@ -643,16 +610,16 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         |------------------------------------------------------------
         */
         $user->shouldReceive('hasRole')
-            ->with(m::anyOf($userRoleNameA, $userRoleNameB), m::anyOf(true, false))
+            ->with(m::anyOf($userRoleNameA, $userRoleNameB))
             ->andReturn(true);
         $user->shouldReceive('hasRole')
-            ->with(m::anyOf($nonUserRoleNameA, $nonUserRoleNameB), m::anyOf(true, false))
+            ->with(m::anyOf($nonUserRoleNameA, $nonUserRoleNameB))
             ->andReturn(false);
         $user->shouldReceive('can')
-            ->with(m::anyOf($userPermNameA, $userPermNameB, $userPermNameC), m::anyOf(true, false))
+            ->with(m::anyOf($userPermNameA, $userPermNameB, $userPermNameC))
             ->andReturn(true);
         $user->shouldReceive('can')
-            ->with(m::anyOf($nonUserPermNameA, $nonUserPermNameB), m::anyOf(true, false))
+            ->with(m::anyOf($nonUserPermNameA, $nonUserPermNameB))
             ->andReturn(false);
 
         /*
@@ -791,18 +758,8 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         | Set
         |------------------------------------------------------------
         */
-        $permA = $this->mockPermission('user_can_a');
-        $permB = $this->mockPermission('user_can_b');
-        $permC = $this->mockPermission('user_can_c');
-
-        $roleA = $this->mockRole('UserRoleA');
-        $roleB = $this->mockRole('UserRoleB');
-
-        $roleA->perms = [$permA];
-        $roleB->perms = [$permB, $permC];
 
         $user = m::mock('HasRoleUser')->makePartial();
-        $user->roles = [$roleA, $roleB];
 
         /*
         |------------------------------------------------------------
@@ -810,16 +767,16 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         |------------------------------------------------------------
         */
         $user->shouldReceive('hasRole')
-            ->with(m::anyOf('UserRoleA', 'UserRoleB'), m::anyOf(true, false))
+            ->with(m::anyOf('UserRoleA', 'UserRoleB'))
             ->andReturn(true);
         $user->shouldReceive('hasRole')
-            ->with('NonUserRoleB', m::anyOf(true, false))
+            ->with('NonUserRoleB')
             ->andReturn(false);
         $user->shouldReceive('can')
-            ->with(m::anyOf('user_can_a', 'user_can_b', 'user_can_c'), m::anyOf(true, false))
+            ->with(m::anyOf('user_can_a', 'user_can_b', 'user_can_c'))
             ->andReturn(true);
         $user->shouldReceive('can')
-            ->with('user_cannot_b', m::anyOf(true, false))
+            ->with('user_cannot_b')
             ->andReturn(false);
 
         /*
@@ -858,18 +815,7 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $nonUserRoleNameA = 'NonUserRoleA';
         $nonUserRoleNameB = 'NonUserRoleB';
 
-        $permA = $this->mockPermission($userPermNameA);
-        $permB = $this->mockPermission($userPermNameB);
-        $permC = $this->mockPermission($userPermNameC);
-
-        $roleA = $this->mockRole($userRoleNameA);
-        $roleB = $this->mockRole($userRoleNameB);
-
-        $roleA->perms = [$permA];
-        $roleB->perms = [$permB, $permC];
-
         $user = m::mock('HasRoleUser')->makePartial();
-        $user->roles = [$roleA, $roleB];
 
         /*
         |------------------------------------------------------------
@@ -877,16 +823,16 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         |------------------------------------------------------------
         */
         $user->shouldReceive('hasRole')
-            ->with(m::anyOf($userRoleNameA, $userRoleNameB), m::anyOf(true, false))
+            ->with(m::anyOf($userRoleNameA, $userRoleNameB))
             ->andReturn(true);
         $user->shouldReceive('hasRole')
-            ->with(m::anyOf($nonUserRoleNameA, $nonUserRoleNameB), m::anyOf(true, false))
+            ->with(m::anyOf($nonUserRoleNameA, $nonUserRoleNameB))
             ->andReturn(false);
         $user->shouldReceive('can')
-            ->with(m::anyOf($userPermNameA, $userPermNameB, $userPermNameC), m::anyOf(true, false))
+            ->with(m::anyOf($userPermNameA, $userPermNameB, $userPermNameC))
             ->andReturn(true);
         $user->shouldReceive('can')
-            ->with(m::anyOf($nonUserPermNameA, $nonUserPermNameB), m::anyOf(true, false))
+            ->with(m::anyOf($nonUserPermNameA, $nonUserPermNameB))
             ->andReturn(false);
 
         /*
@@ -957,13 +903,8 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         | Set
         |------------------------------------------------------------
         */
-        $permA = $this->mockPermission('manage_a');
-
-        $roleA = $this->mockRole('RoleA');
-        $roleA->perms = [$permA];
 
         $user = m::mock('HasRoleUser')->makePartial();
-        $user->roles = [$roleA];
 
         function isExceptionThrown(
             HasRoleUser $user,
