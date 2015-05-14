@@ -22,7 +22,7 @@ trait EntrustPermissionTrait
 
         static::deleting(function($permission) {
             if (!method_exists(Config::get('entrust::permission'), 'bootSoftDeletingTrait')) {
-                $permission->roles()->sync([]);
+                $permission->roles()->detach();
             }
 
             return true;

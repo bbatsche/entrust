@@ -21,7 +21,7 @@ trait EntrustUserTrait
 
         static::deleting(function($user) {
             if (!method_exists(Config::get('auth.model'), 'bootSoftDeletingTrait')) {
-                $user->roles()->sync([]);
+                $user->roles()->detach();
             }
 
             return true;
