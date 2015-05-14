@@ -177,16 +177,16 @@ class EntrustTest extends PHPUnit_Framework_TestCase
         |------------------------------------------------------------
         */
 
-        $failedPerms = array();
-        $this->assertTrue($entrust->isAny(['UserRoleA', 'UserRoleB'], $failedPerms));
-        $this->assertInternalType('array', $failedPerms);
-        $this->assertEmpty($failedPerms);
+        $failedRoles = array();
+        $this->assertTrue($entrust->isAny(['UserRoleA', 'UserRoleB'], $failedRoles));
+        $this->assertInternalType('array', $failedRoles);
+        $this->assertEmpty($failedRoles);
 
-        $failedPerms = array();
-        $this->assertFalse($entrust->isAny(['NonUserRoleA', 'NonUserRoleB'], $failedPerms));
-        $this->assertInternalType('array', $failedPerms);
-        $this->assertContains('NonUserRoleA', $failedPerms);
-        $this->assertContains('NonUserRoleB', $failedPerms);
+        $failedRoles = array();
+        $this->assertFalse($entrust->isAny(['NonUserRoleA', 'NonUserRoleB'], $failedRoles));
+        $this->assertInternalType('array', $failedRoles);
+        $this->assertContains('NonUserRoleA', $failedRoles);
+        $this->assertContains('NonUserRoleB', $failedRoles);
 
         $this->assertFalse($entrust->isAny(['AnyRole']));
     }
@@ -232,16 +232,16 @@ class EntrustTest extends PHPUnit_Framework_TestCase
         |------------------------------------------------------------
         */
 
-        $failedPerms = array();
-        $this->assertTrue($entrust->isAll(['UserRoleA', 'UserRoleB'], $failedPerms));
-        $this->assertInternalType('array', $failedPerms);
-        $this->assertEmpty($failedPerms);
+        $failedRoles = array();
+        $this->assertTrue($entrust->isAll(['UserRoleA', 'UserRoleB'], $failedRoles));
+        $this->assertInternalType('array', $failedRoles);
+        $this->assertEmpty($failedRoles);
 
-        $failedPerms = array();
-        $this->assertFalse($entrust->isAll(['NonUserRoleA', 'NonUserRoleB'], $failedPerms));
-        $this->assertInternalType('array', $failedPerms);
-        $this->assertContains('NonUserRoleA', $failedPerms);
-        $this->assertContains('NonUserRoleB', $failedPerms);
+        $failedRoles = array();
+        $this->assertFalse($entrust->isAll(['NonUserRoleA', 'NonUserRoleB'], $failedRoles));
+        $this->assertInternalType('array', $failedRoles);
+        $this->assertContains('NonUserRoleA', $failedRoles);
+        $this->assertContains('NonUserRoleB', $failedRoles);
 
         $this->assertFalse($entrust->isAll(['AnyRole']));
     }
@@ -288,6 +288,116 @@ class EntrustTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($entrust->can('user_can'));
         $this->assertFalse($entrust->can('user_cannot'));
         $this->assertFalse($entrust->can('any_permission'));
+    }
+
+    public function testCanAny()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $app = new stdClass();
+        $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
+        $user = m::mock('Bbatsche\Entrust\Contracts\EntrustUserInterface');
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $entrust->shouldReceive('user')->andReturn($user)->twice()->ordered();
+        $entrust->shouldReceive('user')->andReturn(false)->once()->ordered();
+
+        $user->shouldReceive('canAny')
+            ->with(['user-can1', 'user-can2'], array())
+            ->andReturn(true)
+            ->once();
+        $user->shouldReceive('canAny')
+            ->with(['user-cannot1', 'user-cannot2'], m::on(function(&$perms) {
+                if (!is_array($perms)) return false;
+
+                $perms[] = 'user-cannot1';
+                $perms[] = 'user-cannot2';
+
+                return true;
+            }))->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $failedPerms = array();
+        $this->assertTrue($entrust->canAny(['user-can1', 'user-can2'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertEmpty($failedPerms);
+
+        $failedPerms = array();
+        $this->assertFalse($entrust->canAny(['user-cannot1', 'user-cannot2'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('user-cannot1', $failedPerms);
+        $this->assertContains('user-cannot2', $failedPerms);
+
+        $this->assertFalse($entrust->canAny(['any-perm']));
+    }
+
+    public function testCanAll()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $app = new stdClass();
+        $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
+        $user = m::mock('Bbatsche\Entrust\Contracts\EntrustUserInterface');
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $entrust->shouldReceive('user')->andReturn($user)->twice()->ordered();
+        $entrust->shouldReceive('user')->andReturn(false)->once()->ordered();
+
+        $user->shouldReceive('canAll')
+            ->with(['user-can1', 'user-can2'], array())
+            ->andReturn(true)
+            ->once();
+        $user->shouldReceive('canAll')
+            ->with(['user-cannot1', 'user-cannot2'], m::on(function(&$perms) {
+                if (!is_array($perms)) return false;
+
+                $perms[] = 'user-cannot1';
+                $perms[] = 'user-cannot2';
+
+                return true;
+            }))->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $failedPerms = array();
+        $this->assertTrue($entrust->canAll(['user-can1', 'user-can2'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertEmpty($failedPerms);
+
+        $failedPerms = array();
+        $this->assertFalse($entrust->canAll(['user-cannot1', 'user-cannot2'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('user-cannot1', $failedPerms);
+        $this->assertContains('user-cannot2', $failedPerms);
+
+        $this->assertFalse($entrust->canAll(['any-perm']));
     }
 
     public function testUser()
