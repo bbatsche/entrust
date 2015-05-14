@@ -24,6 +24,7 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
         | Set
         |------------------------------------------------------------
         */
+
         $belongsToMany = new stdClass();
 
         $app    = Mockery::mock('app')->shouldReceive('instance')->getMock();
@@ -60,6 +61,7 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
         | Set
         |------------------------------------------------------------
         */
+
         $belongsToMany = new stdClass();
 
         $app    = Mockery::mock('app')->shouldReceive('instance')->getMock();
@@ -99,8 +101,8 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
         |------------------------------------------------------------
         */
 
-        $perm1 = Mockery::mock('Bbatsche\Entrust\Contracts\EntrustPermissionInterface');
-        $perm2 = Mockery::mock('Bbatsche\Entrust\Contracts\EntrustPermissionInterface');
+        $perm1 = Mockery::mock('Bbatsche\Entrust\EntrustPermission')->makePartial();
+        $perm2 = Mockery::mock('Bbatsche\Entrust\EntrustPermission')->makePartial();
 
         $perm1->name = 'user-perm1';
         $perm2->name = 'user-perm2';
@@ -241,7 +243,7 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
         $relation = Mockery::mock('Illuminate\Database\Eloquent\Relations\BelongsToMany');
 
         $permArr = array('id' => '2');
-        $permObj = Mockery::mock('Bbatsche\Entrust\Contracts\EntrustPermissionInterface');
+        $permObj = Mockery::mock('Bbatsche\Entrust\EntrustPermission')->makePartial();
 
         /*
         |------------------------------------------------------------
@@ -279,7 +281,7 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
         $relation = Mockery::mock('Illuminate\Database\Eloquent\Relations\BelongsToMany');
 
         $permArr = array('id' => '2');
-        $permObj = Mockery::mock('Bbatsche\Entrust\Contracts\EntrustPermissionInterface');
+        $permObj = Mockery::mock('Bbatsche\Entrust\EntrustPermission')->makePartial();
 
         /*
         |------------------------------------------------------------
