@@ -210,33 +210,44 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         | Set
         |------------------------------------------------------------
         */
-        $permA = $this->mockPermission('manage_a');
-        $permB = $this->mockPermission('manage_b');
-        $permC = $this->mockPermission('manage_c');
-
         $roleA = $this->mockRole('RoleA');
         $roleB = $this->mockRole('RoleB');
 
-        $roleA->perms = [$permA];
-        $roleB->perms = [$permB, $permC];
+        $user = m::mock('HasRoleUser')->makePartial();
+        $user->roles = new Collection([$roleA, $roleB]);
 
-        $user = new HasRoleUser();
-        $user->roles = [$roleA, $roleB];
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $user->shouldReceive('canAny')->with(['AnyPerm1', 'AnyPerm2'])->andReturn(true)->once();
+        $user->shouldReceive('canAny')->with(['AnyPerm3', 'AnyPerm4'])->andReturn(false)->once();
+        $user->shouldReceive('canAll')->with(['AllPerm1', 'AllPerm2'])->andReturn(true)->once();
+        $user->shouldReceive('canAll')->with(['AllPerm3', 'AllPerm4'])->andReturn(false)->once();
+
+        $roleA->shouldReceive('can')->with('perm1')->andReturn(true)->once();
+        $roleB->shouldReceive('can')->with('perm1')->andReturn(true)->once();
+        $roleB->shouldReceive('can')->with('perm2')->andReturn(true)->once();
+        $roleA->shouldReceive('can')->with('perm2')->andReturn(false)->once();
+        $roleA->shouldReceive('can')->with('perm3')->andReturn(false)->once();
+        $roleB->shouldReceive('can')->with('perm3')->andReturn(false)->once();
 
         /*
         |------------------------------------------------------------
         | Assertion
         |------------------------------------------------------------
         */
-        $this->assertTrue($user->can('manage_a'));
-        $this->assertTrue($user->can('manage_b'));
-        $this->assertTrue($user->can('manage_c'));
-        $this->assertFalse($user->can('manage_d'));
 
-        $this->assertTrue($user->can(['manage_a', 'manage_b', 'manage_c']));
-        $this->assertTrue($user->can(['manage_a', 'manage_b', 'manage_d']));
-        $this->assertFalse($user->can(['manage_a', 'manage_b', 'manage_d'], true));
-        $this->assertFalse($user->can(['manage_d', 'manage_e']));
+        $this->assertTrue($user->can(['AnyPerm1', 'AnyPerm2']));
+        $this->assertFalse($user->can(['AnyPerm3', 'AnyPerm4']));
+        $this->assertTrue($user->can(['AllPerm1', 'AllPerm2'], true));
+        $this->assertFalse($user->can(['AllPerm3', 'AllPerm4'], true));
+
+        $this->assertTrue($user->can('perm1'));
+        $this->assertTrue($user->can('perm2'));
+        $this->assertFalse($user->can('perm3'));
     }
 
     public function testAbilityShouldReturnBoolean()
