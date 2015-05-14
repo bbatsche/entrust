@@ -1,8 +1,6 @@
 <?php
 
-use Bbatsche\Entrust\Contracts\EntrustUserInterface;
 use Bbatsche\Entrust\Entrust;
-use Bbatsche\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Support\Facades\Facade;
 use Mockery as m;
 
@@ -70,7 +68,7 @@ class EntrustTest extends PHPUnit_Framework_TestCase
         */
         $app = new stdClass();
         $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
-        $user = m::mock('EntrustTestUser');
+        $user = m::mock('Bbatsche\Entrust\Contracts\EntrustUserInterface');
 
         /*
         |------------------------------------------------------------
@@ -114,7 +112,7 @@ class EntrustTest extends PHPUnit_Framework_TestCase
         */
         $app = new stdClass();
         $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
-        $user = m::mock('EntrustTestUser');
+        $user = m::mock('Bbatsche\Entrust\Contracts\EntrustUserInterface');
 
         /*
         |------------------------------------------------------------
@@ -148,7 +146,7 @@ class EntrustTest extends PHPUnit_Framework_TestCase
 
         $app = new stdClass();
         $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
-        $user = m::mock('EntrustTestUser');
+        $user = m::mock('Bbatsche\Entrust\Contracts\EntrustUserInterface');
 
         /*
         |------------------------------------------------------------
@@ -203,7 +201,7 @@ class EntrustTest extends PHPUnit_Framework_TestCase
 
         $app = new stdClass();
         $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
-        $user = m::mock('EntrustTestUser');
+        $user = m::mock('Bbatsche\Entrust\Contracts\EntrustUserInterface');
 
         /*
         |------------------------------------------------------------
@@ -257,7 +255,7 @@ class EntrustTest extends PHPUnit_Framework_TestCase
         */
         $app = new stdClass();
         $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
-        $user = m::mock('_mockedUser');
+        $user = m::mock('Bbatsche\Entrust\Contracts\EntrustUserInterface');
 
         /*
         |------------------------------------------------------------
@@ -302,7 +300,7 @@ class EntrustTest extends PHPUnit_Framework_TestCase
         $app = new stdClass();
         $app->auth = m::mock('Auth');
         $entrust = new Entrust($app);
-        $user = m::mock('_mockedUser');
+        $user = m::mock('Bbatsche\Entrust\Contracts\EntrustUserInterface');
 
         /*
         |------------------------------------------------------------
@@ -577,9 +575,4 @@ class EntrustTest extends PHPUnit_Framework_TestCase
             return implode('_', $roles) . '_' . implode('_', $permissions) . '_' . substr(md5($route), 0, 6);
         }
     }
-}
-
-class EntrustTestUser implements EntrustUserInterface
-{
-    use EntrustUserTrait;
 }
