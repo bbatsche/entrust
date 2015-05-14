@@ -216,6 +216,7 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
         */
 
         $this->role->shouldReceive('perms')->andReturn($relation)->twice();
+
         $relation->shouldReceive('sync')->with($newPerms)->once()->ordered();
         $relation->shouldReceive('detach')->once()->ordered();
 
@@ -225,7 +226,34 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
 
     public function testAttachPermission()
     {
-        $this->markTestIncomplete();
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $relation = Mockery::mock('Illuminate\Database\Eloquent\Relations\BelongsToMany');
+
+        $permArr = array('id' => '2');
+        $permObj = Mockery::mock('Bbatsche\Entrust\Contracts\EntrustPermissionInterface');
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $this->role->shouldReceive('perms')->andReturn($relation)->times(3);
+
+        $permObj->shouldReceive('getKey')->andReturn('3')->once();
+
+        $relation->shouldReceive('attach')->with('1')->once()->ordered();
+        $relation->shouldReceive('attach')->with('2')->once()->ordered();
+        $relation->shouldReceive('attach')->with('3')->once()->ordered();
+
+        $this->role->attachPermission('1');
+        $this->role->attachPermission($permArr);
+        $this->role->attachPermission($permObj);
     }
 
     public function testDetachPermission()
