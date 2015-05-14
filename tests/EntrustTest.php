@@ -1,6 +1,8 @@
 <?php
 
+use Bbatsche\Entrust\Contracts\EntrustUserInterface;
 use Bbatsche\Entrust\Entrust;
+use Bbatsche\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Support\Facades\Facade;
 use Mockery as m;
 
@@ -68,7 +70,7 @@ class EntrustTest extends PHPUnit_Framework_TestCase
         */
         $app = new stdClass();
         $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
-        $user = m::mock('_mockedUser');
+        $user = m::mock('EntrustTestUser');
 
         /*
         |------------------------------------------------------------
@@ -101,6 +103,149 @@ class EntrustTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($entrust->hasRole('UserRole'));
         $this->assertFalse($entrust->hasRole('NonUserRole'));
         $this->assertFalse($entrust->hasRole('AnyRole'));
+    }
+
+    public function testIs()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+        $app = new stdClass();
+        $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
+        $user = m::mock('EntrustTestUser');
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $entrust->shouldReceive('user')->andReturn($user)->twice()->ordered();
+        $entrust->shouldReceive('user')->andReturn(false)->once()->ordered();
+
+        $user->shouldReceive('is')->with('UserRole')->andReturn(true)->once();
+        $user->shouldReceive('is')->with('NonUserRole')->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+        $this->assertTrue($entrust->is('UserRole'));
+        $this->assertFalse($entrust->is('NonUserRole'));
+        $this->assertFalse($entrust->is('AnyRole'));
+    }
+
+    public function testIsAny()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $app = new stdClass();
+        $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
+        $user = m::mock('EntrustTestUser');
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $entrust->shouldReceive('user')->andReturn($user)->twice()->ordered();
+        $entrust->shouldReceive('user')->andReturn(false)->once()->ordered();
+
+        $user->shouldReceive('isAny')
+            ->with(['UserRoleA', 'UserRoleB'], array())
+            ->andReturn(true)
+            ->once();
+        $user->shouldReceive('isAny')
+            ->with(['NonUserRoleA', 'NonUserRoleB'], m::on(function(&$roles) {
+                if (!is_array($roles)) return false;
+
+                $roles[] = 'NonUserRoleA';
+                $roles[] = 'NonUserRoleB';
+
+                return true;
+            }))->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $failedPerms = array();
+        $this->assertTrue($entrust->isAny(['UserRoleA', 'UserRoleB'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertEmpty($failedPerms);
+
+        $failedPerms = array();
+        $this->assertFalse($entrust->isAny(['NonUserRoleA', 'NonUserRoleB'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('NonUserRoleA', $failedPerms);
+        $this->assertContains('NonUserRoleB', $failedPerms);
+
+        $this->assertFalse($entrust->isAny(['AnyRole']));
+    }
+
+    public function testIsAll()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $app = new stdClass();
+        $entrust = m::mock('Bbatsche\Entrust\Entrust[user]', [$app]);
+        $user = m::mock('EntrustTestUser');
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $entrust->shouldReceive('user')->andReturn($user)->twice()->ordered();
+        $entrust->shouldReceive('user')->andReturn(false)->once()->ordered();
+
+        $user->shouldReceive('isAll')
+            ->with(['UserRoleA', 'UserRoleB'], array())
+            ->andReturn(true)
+            ->once();
+        $user->shouldReceive('isAll')
+            ->with(['NonUserRoleA', 'NonUserRoleB'], m::on(function(&$roles) {
+                if (!is_array($roles)) return false;
+
+                $roles[] = 'NonUserRoleA';
+                $roles[] = 'NonUserRoleB';
+
+                return true;
+            }))->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $failedPerms = array();
+        $this->assertTrue($entrust->isAll(['UserRoleA', 'UserRoleB'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertEmpty($failedPerms);
+
+        $failedPerms = array();
+        $this->assertFalse($entrust->isAll(['NonUserRoleA', 'NonUserRoleB'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('NonUserRoleA', $failedPerms);
+        $this->assertContains('NonUserRoleB', $failedPerms);
+
+        $this->assertFalse($entrust->isAll(['AnyRole']));
     }
 
     public function testCan()
@@ -432,4 +577,9 @@ class EntrustTest extends PHPUnit_Framework_TestCase
             return implode('_', $roles) . '_' . implode('_', $permissions) . '_' . substr(md5($route), 0, 6);
         }
     }
+}
+
+class EntrustTestUser implements EntrustUserInterface
+{
+    use EntrustUserTrait;
 }
