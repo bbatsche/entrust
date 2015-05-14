@@ -27,6 +27,7 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
 
         $app    = Mockery::mock('app')->shouldReceive('instance')->getMock();
         $config = Mockery::mock('config');
+
         Config::setFacadeApplication($app);
         Config::swap($config);
 
@@ -36,23 +37,57 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
         |------------------------------------------------------------
         */
 
-        $this->role->shouldReceive('belongsToMany')->with('users_table_name', 'roles_table_name')
+        $this->role->shouldReceive('belongsToMany')->with('UserModelName', 'role_user_table_name')
             ->andReturn($belongsToMany)->once();
 
-        Config::shouldReceive('get')->once()->with('auth.model')->andReturn('users_table_name');
-        Config::shouldReceive('get')->once()->with('entrust::role_user_table')->andReturn('roles_table_name');
+        Config::shouldReceive('get')->with('auth.model')->andReturn('UserModelName')->once();
+        Config::shouldReceive('get')->with('entrust::role_user_table')->andReturn('role_user_table_name')->once();
 
         /*
         |------------------------------------------------------------
         | Assertion
         |------------------------------------------------------------
         */
+
         $this->assertSame($belongsToMany, $this->role->users());
     }
 
     public function testPerms()
     {
-        $this->markTestIncomplete();
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+        $belongsToMany = new stdClass();
+
+        $app    = Mockery::mock('app')->shouldReceive('instance')->getMock();
+        $config = Mockery::mock('config');
+
+        Config::setFacadeApplication($app);
+        Config::swap($config);
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $this->role->shouldReceive('belongsToMany')->with('PermissionModelName', 'permission_role_table_name')
+            ->andReturn($belongsToMany)->once();
+
+        Config::shouldReceive('get')->with('entrust::permission')
+            ->andReturn('PermissionModelName')->once();
+        Config::shouldReceive('get')->with('entrust::permission_role_table')
+            ->andReturn('permission_role_table_name')->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $this->assertSame($belongsToMany, $this->role->perms());
     }
 
     public function testCan()
