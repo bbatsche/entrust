@@ -250,6 +250,96 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($user->can('perm3'));
     }
 
+    public function testCanAny()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $user = m::mock('HasRoleUser')->makePartial();
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $user->shouldReceive('can')->with('perm1')->andReturn(true)->twice();
+        $user->shouldReceive('can')->with('perm2')->andReturn(true)->once();
+        $user->shouldReceive('can')->with('perm3')->andReturn(false)->twice();
+        $user->shouldReceive('can')->with('perm4')->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $failedPerms = array();
+        $this->assertTrue($user->canAny(['perm1', 'perm2'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertEmpty($failedPerms);
+
+        $failedPerms = array();
+        $this->assertTrue($user->canAny(['perm1', 'perm3'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('perm3', $failedPerms);
+        $this->assertNotContains('perm1', $failedPerms);
+
+        $failedPerms = array();
+        $this->assertFalse($user->canAny(['perm3', 'perm4'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('perm3', $failedPerms);
+        $this->assertContains('perm4', $failedPerms);
+    }
+
+    public function testCanAll()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $user = m::mock('HasRoleUser')->makePartial();
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $user->shouldReceive('can')->with('perm1')->andReturn(true)->twice();
+        $user->shouldReceive('can')->with('perm2')->andReturn(true)->once();
+        $user->shouldReceive('can')->with('perm3')->andReturn(false)->twice();
+        $user->shouldReceive('can')->with('perm4')->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $failedPerms = array();
+        $this->assertTrue($user->canAll(['perm1', 'perm2'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertEmpty($failedPerms);
+
+        $failedPerms = array();
+        $this->assertFalse($user->canAll(['perm1', 'perm3'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('perm3', $failedPerms);
+        $this->assertNotContains('perm1', $failedPerms);
+
+        $failedPerms = array();
+        $this->assertFalse($user->canAll(['perm3', 'perm4'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('perm3', $failedPerms);
+        $this->assertContains('perm4', $failedPerms);
+    }
+
     public function testAbilityShouldReturnBoolean()
     {
         /*
