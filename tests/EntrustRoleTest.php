@@ -102,23 +102,99 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
         $perm1 = Mockery::mock('Bbatsche\Entrust\Contracts\EntrustPermissionInterface');
         $perm2 = Mockery::mock('Bbatsche\Entrust\Contracts\EntrustPermissionInterface');
 
-        $perm1->name = 'perm1';
-        $perm2->name = 'perm2';
+        $perm1->name = 'user-perm1';
+        $perm2->name = 'user-perm2';
 
         $this->role->perms = new Collection([$perm1, $perm2]);
 
-        $this->assertTrue($this->role->can('perm1'));
-        $this->assertFalse($this->role->can('perm3'));
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $this->assertTrue($this->role->can('user-perm1'));
+        $this->assertFalse($this->role->can('nonuser-perm'));
     }
 
     public function testCanAny()
     {
-        $this->markTestIncomplete();
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $this->role->shouldReceive('can')->with('user-perm1')->andReturn(true)->twice();
+        $this->role->shouldReceive('can')->with('user-perm2')->andReturn(true)->once();
+        $this->role->shouldReceive('can')->with('nonuser-perm1')->andReturn(false)->twice();
+        $this->role->shouldReceive('can')->with('nonuser-perm2')->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        // Role has all perms
+        $failedPerms = array();
+        $this->assertTrue($this->role->canAny(['user-perm1', 'user-perm2'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertEmpty($failedPerms);
+
+        // Role has mixed perms
+        $failedPerms = array();
+        $this->assertTrue($this->role->canAny(['user-perm1', 'nonuser-perm1'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('nonuser-perm1', $failedPerms);
+        $this->assertNotContains('user-perm1', $failedPerms);
+
+        // Role has no perms
+        $failedPerms = array();
+        $this->assertFalse($this->role->canAny(['nonuser-perm1', 'nonuser-perm2'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('nonuser-perm1', $failedPerms);
+        $this->assertContains('nonuser-perm2', $failedPerms);
     }
 
     public function testCanAll()
     {
-        $this->markTestIncomplete();
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $this->role->shouldReceive('can')->with('user-perm1')->andReturn(true)->twice();
+        $this->role->shouldReceive('can')->with('user-perm2')->andReturn(true)->once();
+        $this->role->shouldReceive('can')->with('nonuser-perm1')->andReturn(false)->twice();
+        $this->role->shouldReceive('can')->with('nonuser-perm2')->andReturn(false)->once();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        // Role has all perms
+        $failedPerms = array();
+        $this->assertTrue($this->role->canAll(['user-perm1', 'user-perm2'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertEmpty($failedPerms);
+
+        // Role has mixed perms
+        $failedPerms = array();
+        $this->assertFalse($this->role->canAll(['user-perm1', 'nonuser-perm1'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('nonuser-perm1', $failedPerms);
+        $this->assertNotContains('user-perm1', $failedPerms);
+
+        // Role has no perms
+        $failedPerms = array();
+        $this->assertFalse($this->role->canAll(['nonuser-perm1', 'nonuser-perm2'], $failedPerms));
+        $this->assertInternalType('array', $failedPerms);
+        $this->assertContains('nonuser-perm1', $failedPerms);
+        $this->assertContains('nonuser-perm2', $failedPerms);
     }
 
     public function testSavePermissions()
