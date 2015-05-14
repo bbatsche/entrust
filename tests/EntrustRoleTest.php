@@ -199,7 +199,28 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
 
     public function testSavePermissions()
     {
-        $this->markTestIncomplete();
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $newPerms = array('new-perm');
+
+        $relation = Mockery::mock('Illuminate\Database\Eloquent\Relations\BelongsToMany');
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $this->role->shouldReceive('perms')->andReturn($relation)->twice();
+        $relation->shouldReceive('sync')->with($newPerms)->once()->ordered();
+        $relation->shouldReceive('detach')->once()->ordered();
+
+        $this->role->savePermissions($newPerms);
+        $this->role->savePermissions([]);
     }
 
     public function testAttachPermission()
