@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Config;
 
 class EntrustRoletest extends PHPUnit_Framework_TestCase
@@ -92,7 +93,22 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
 
     public function testCan()
     {
-        $this->markTestIncomplete();
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+
+        $perm1 = Mockery::mock('Bbatsche\Entrust\Contracts\EntrustPermissionInterface');
+        $perm2 = Mockery::mock('Bbatsche\Entrust\Contracts\EntrustPermissionInterface');
+
+        $perm1->name = 'perm1';
+        $perm2->name = 'perm2';
+
+        $this->role->perms = new Collection([$perm1, $perm2]);
+
+        $this->assertTrue($this->role->can('perm1'));
+        $this->assertFalse($this->role->can('perm3'));
     }
 
     public function testCanAny()
