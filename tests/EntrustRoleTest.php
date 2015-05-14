@@ -308,11 +308,41 @@ class EntrustRoletest extends PHPUnit_Framework_TestCase
 
     public function testAttachPermissions()
     {
-        $this->markTestIncomplete();
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $this->role->shouldReceive('attachPermission')->with('perm1')->once();
+        $this->role->shouldReceive('attachPermission')->with('perm2')->once();
+
+        /*
+        |------------------------------------------------------------
+        | Execute
+        |------------------------------------------------------------
+        */
+
+        $this->role->attachPermissions(['perm1', 'perm2']);
     }
 
     public function testDetachPermissions()
     {
-        $this->markTestIncomplete();
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $this->role->shouldReceive('detachPermission')->with('perm1')->once();
+        $this->role->shouldReceive('detachPermission')->with('perm2')->once();
+
+        /*
+        |------------------------------------------------------------
+        | Execute
+        |------------------------------------------------------------
+        */
+
+        $this->role->detachPermissions(['perm1', 'perm2']);
     }
 }
