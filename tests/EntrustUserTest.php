@@ -227,6 +227,8 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $user->shouldReceive('canAll')->with(['AllPerm1', 'AllPerm2'])->andReturn(true)->once();
         $user->shouldReceive('canAll')->with(['AllPerm3', 'AllPerm4'])->andReturn(false)->once();
 
+        $user->shouldReceive('getRelations')->andReturn(array('roles' => ''))->times(7);
+
         $roleA->shouldReceive('can')->with('perm1')->andReturn(true)->once();
         $roleB->shouldReceive('can')->with('perm1')->andReturn(true)->once();
         $roleB->shouldReceive('can')->with('perm2')->andReturn(true)->once();
@@ -248,6 +250,40 @@ class EntrustUserTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($user->can('perm1'));
         $this->assertTrue($user->can('perm2'));
         $this->assertFalse($user->can('perm3'));
+    }
+
+    public function testCanEagerLoading()
+    {
+        /*
+        |------------------------------------------------------------
+        | Set
+        |------------------------------------------------------------
+        */
+        $role = $this->mockRole('Role');
+
+        $user = m::mock('HasRoleUser')->makePartial();
+        $user->roles = new Collection([$role]);
+
+        /*
+        |------------------------------------------------------------
+        | Expectation
+        |------------------------------------------------------------
+        */
+
+        $user->shouldReceive('getRelations')->andReturn(array())->once()->ordered();
+        $user->shouldReceive('load')->with('roles.perms')->once()->ordered();
+        $user->shouldReceive('getRelations')->andReturn(array('roles' => ''))->once()->ordered();
+
+        $role->shouldReceive('can')->with('perm')->andReturn(true)->twice();
+
+        /*
+        |------------------------------------------------------------
+        | Assertion
+        |------------------------------------------------------------
+        */
+
+        $user->can('perm');
+        $user->can('perm');
     }
 
     public function testCanAny()
