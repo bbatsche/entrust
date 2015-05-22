@@ -48,22 +48,28 @@ trait EntrustControllerTrait
                     $filterPassed = $user->$entrustMethod($entrustNames, $entrustFailed);
                 } else {
                     $filterPassed = false;
-                    $entrustFailed = $entrustNames;
                 }
-            } else {
-                $filterPassed = Entrust::$entrustMethod($entrustNames);
+            } elseif(!($filterPassed = Entrust::$entrustMethod($entrustNames))) {
+                // Filter failed; reassign failed values with required values since it was singular
+                $entrustFailed = $entrustNames;
             }
         }
 
         if (!$filterPassed) {
+            $reflection = new \ReflectionClass($this);
+
             if (!empty($this->$callbackName) && is_string($this->$callbackName)) {
                 // callbackName is the name of a function
 
                 $callback = array($this, $this->$callbackName);
             } elseif (is_callable($this->$callbackName)) {
-                // callbackName is a closure (or I guess some other callable type?)
+                // callbackName is a closure
 
                 $callback = $this->$callbackName;
+            } elseif ($reflection->hasMethod($callbackName)) {
+                // callbackName is a function in the class
+
+                $callback = array($this, $callbackName);
             } else {
                 App::abort(403);
             }
