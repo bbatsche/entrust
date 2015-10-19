@@ -1,6 +1,6 @@
 # Entrust (Laravel4 Package)
 
-Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel4**.
+Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 4**.
 
 First and foremost I must give credit to the original developers of this package.
 Andrew Elkins (@andrewelkins) and Leroy Merlin (@zizaco) did excellent work on the fundamental design and functionality.
@@ -63,7 +63,7 @@ In your `config/app.php` add `'Bbatsche\Entrust\EntrustServiceProvider'` to the 
 'providers' => array(
     'Illuminate\Foundation\Providers\ArtisanServiceProvider',
     'Illuminate\Auth\AuthServiceProvider',
-    ...
+    // ...
     'Bbatsche\Entrust\EntrustServiceProvider',
 ),
 ```
@@ -74,15 +74,14 @@ At the end of `config/app.php` add `'Entrust' => 'Bbatsche\Entrust\EntrustFacade
 'aliases' => array(
     'App'        => 'Illuminate\Support\Facades\App',
     'Artisan'    => 'Illuminate\Support\Facades\Artisan',
-    ...
+    // ...
     'Entrust'    => 'Bbatsche\Entrust\EntrustFacade',
 ),
 ```
 
 ## Configuration
 
-Set the property values in the `config/auth.php`.
-These values will be used by entrust to refer to the correct user table and model.
+Set the property values in the `config/auth.php` (typically, these values are configured correctly out of the box but it is worth double checking). These values will be used by entrust to refer to the correct user table and model.
 
 You can also publish the configuration for this package to further customize table names and model namespaces:
 
@@ -179,7 +178,7 @@ class User extends Eloquent implements EntrustUserInterface
 }
 ```
 
-This will enable the relation with `Role` and add the following methods `roles()`, `hasRole($name)`, `can($permission)`, and `ability($roles, $permissions, $options)` within your `User` model.
+This will enable the relation with `Role` and add several methods to check for roles or permissions within your `User` model.
 
 Don't forget to dump composer autoload
 
@@ -198,7 +197,7 @@ Entrust is configured by default to follow Laravel's naming conventions for tabl
 public function __construct($attr = array())
 {
     $this->table = Config::get('entrust::roles_table');
-    
+
     parent::__construct($attr);
 }
 ```
@@ -253,8 +252,7 @@ $admin->description  = 'User is allowed to manage and edit other users'; // opti
 $admin->save();
 ```
 
-Next, with both roles created let's assign them to the users.
-Thanks to the `HasRole` trait this is as easy as:
+Next, with both roles created let's assign them to the users. Thanks to the `EntrustUserTrait` trait this is as easy as:
 
 ```php
 $user = User::where('username', '=', 'bbatsche')->first();
@@ -284,57 +282,109 @@ $editUser->description  = 'edit existing users'; // optional
 $editUser->save();
 
 $admin->attachPermission($createPost);
-// equivalent to $admin->perms()->sync(array($createPost->id));
+// equivalent to $admin->perms()->attach($createPost->id);
 
 $owner->attachPermissions(array($createPost, $editUser));
-// equivalent to $owner->perms()->sync(array($createPost->id, $editUser->id));
+// equivalent to $owner->perms()->attach(array($createPost->id, $editUser->id));
 ```
 
 #### Checking for Roles & Permissions
 
-Now we can check for roles and permissions simply by doing:
+Now we can check for a role with the `is()` method simply by doing:
 
 ```php
-$user->hasRole('owner');   // false
-$user->hasRole('admin');   // true
-$user->can('edit-user');   // false
+$user->is('owner'); // false
+$user->is('admin'); // true
+```
+
+If you would like to check *multiple* roles, you can use either `isAny()` or `isAll()` depending on whether you require just one of the roles, or all of them:
+
+```php
+$user->isAny(['owner', 'admin']); // true
+$user->isAll(['owner', 'admin']); // false, $user does not have the 'owner' role
+```
+
+If you need more details about which roles failed, you can pass a variable to the second argument. After calling `isAny()` or `isAll()` the variable will be an array of roles that failed.
+
+```php
+$failedRoles = array();
+
+$user->isAny(['owner', 'admin'], $failedRoles); // true
+// or
+$user->isAll(['owner', 'admin'], $failedRoles); // false
+
+print_r($failedRoles);
+// Array
+// (
+//      [0] => owner
+// )
+```
+
+Similarly, if we want to check for a user's permissions we use the method `can()`:
+
+```php
 $user->can('create-post'); // true
+$user->can('edit-user');   // false
 ```
 
-Both `hasRole()` and `can()` can receive an array of roles & permissions to check:
+Just like with roles, there are methods for checking multiple permissions; `canAny()` and `canAll()`:
 
 ```php
-$user->hasRole(['owner', 'admin']);       // true
-$user->can(['edit-user', 'create-post']); // true
+$user->canAny(['create-post', 'edit-user']); // true
+$user->canAll(['create-post', 'edit-user']); // false, $user doesn't have 'edit-user' permission
 ```
 
-By default, if any of the roles or permissions are present for a user then the method will return true.
-Passing `true` as a second parameter instructs the method to require **all** of the items:
+These methods can also include a variable for tracking which specific permissions failed:
 
 ```php
-$user->hasRole(['owner', 'admin']);             // true
-$user->hasRole(['owner', 'admin'], true);       // false, user does not have admin role
-$user->can(['edit-user', 'create-post']);       // true
-$user->can(['edit-user', 'create-post'], true); // false, user does not have edit-user permission
+$failedPerms = array();
+
+$user->canAny(['create-post', 'edit-user'], $failedPerms); // true
+// or
+$user->canAll(['create-post', 'edit-user'], $failedPerms); // false
+
+print_r($failedPerms);
+// Array
+// (
+//      [0] => edit-user
+// )
 ```
 
-You can have as many `Role`s as you want for each `User` and vice versa.
+You can have as many `Role`s as you want for each `User`, and each `Role` can have as many `Permissions` as necessary.
 
-The `Entrust` class has shortcuts to both `can()` and `hasRole()` for the currently logged in user:
+The `Entrust` class has shortcuts to both `is*()` and `can*()` methods for the currently logged in user:
 
 ```php
-Entrust::hasRole('role-name');
+Entrust::is('role-name');
 Entrust::can('permission-name');
 
-// is identical to
+// are identical to
 
-Auth::user()->hasRole('role-name');
+Auth::user()->is('role-name');
 Auth::user()->can('permission-name);
 ```
 
+```php
+Entrust::isAny(['role-name-1', 'role-name-2', /* ... */]);
+Entrust::isAll(['role-name-1', 'role-name-2', /* ... */]);
+
+Entrust::canAny(['permission-name-1', 'permission-name-2', /* ... */]);
+Entrust::canAll(['permission-name-1', 'permission-name-2', /* ... */]);
+
+// are identical to
+
+Auth::user()->isAny(['role-name-1', 'role-name-2', /* ... */]);
+Auth::user()->isAll(['role-name-1', 'role-name-2', /* ... */]);
+
+Auth::user()->canAny(['permission-name-1', 'permission-name-2', /* ... */]);
+Auth::user()->canAll(['permission-name-1', 'permission-name-2', /* ... */]);
+```
+
+_**Note:** Laravel Facades do not support pass by reference, meaning you **cannot** pass a second argument to the `*Any()` and `*All()` methods to find out exactly which permissions or roles failed. To do this, you must get an instance of the `User` object._
+
 #### User ability
 
-More advanced checking can be done using the awesome `ability` function.
+More advanced checking can be done using the `ability()` function.
 It takes in three parameters (roles, permissions, options):
 - `roles` is a set of roles to check.
 - `permissions` is a set of permissions to check.
@@ -388,6 +438,98 @@ var_dump($allValidations);
 //     ['create-post'] => bool(true)
 //     ['edit-user'] => bool(false)
 // }
+```
+
+### Controller Trait
+
+Typically when you are creating a controller you will find that there are a set of roles or permissions you want to enforce on a per-action basis. Entrust includes a trait for your controllers that makes enforcing these rules quite simple. First, you must use the trait in your controller. For example, we could include it in a `BaseController` so that the feature is available in all the controllers for our application:
+
+```php
+<?php
+
+use Bbatsche\Entrust\Traits\EntrustControllerTrait;
+
+class BaseController extends Controller
+{
+    use EntrustControllerTrait;
+}
+```
+
+This trait includes two methods that can be used to filter requests to your controller, they are `entrustPermissionFilter()` and `entrustRoleFilter()`. To enable one or both of these filters in your controller, use the `beforeFilter()` method in the controller's constructor:
+
+```php
+public function __construct()
+{
+    $this->beforeFilter('@entrustRoleFilter');
+
+    // and / or
+
+    $this->beforeFilter('@entrustPermissionFilter');
+}
+```
+
+The required roles or permissions are specified in properties of your controller; either `$entrustPerms` or `$entrustRoles`. These properties should be associative arrays, with the key being the name of the controller action (or method), and the value being the roles or permissions required for that action. The roles and permissions can be either a string or an array of multiple values. For example:
+
+```php
+protected $entrustPerms = array(
+    'create'  => 'post-create',
+    'edit'    => ['post-edit-own',    'post-edit'],
+    'destroy' => ['post-destroy-own', 'post-destroy']
+);
+
+protected $entrustRoles = array(
+    'index'  => ['owner', 'admin'],
+    'store'  => 'owner',
+    'update' => 'owner'
+);
+```
+
+Entrust will now automatically check against these roles or permissions for each method in the controller. If the current user does not have the required role or permissions, a [403](http://httpstatusdogs.com/403-forbidden) response will be returned.
+
+The controller trait includes a couple of optional flags that control how it interprets the array of perms and roles. When the specified value is an array, Entrust assumes than any one of the entities is sufficient. To force Entrust to require *all* the values, set the property `$entrustRequireAll` to `true` in your controller. In addition, if an method is not specified in your array, the filters treats this as a "pass". To make Entrust require a role or permission to be specified for *all* actions, set the property `$entrustAllowMissing` to `false`. This setting may be useful as a security sanity check, meaning that if the role or permission for an action is not specified, then no user should be able to access it.
+
+If you would like to do some additional handling after one of the filters fails you can create callback functions. Callback functions may be specified in one of three ways. First, you can create methods called `entrustPermissionCallback()` or `entrustRoleCallback()`. Second, you can create a closure and assign it to either `$entrustPermisionCallback` or `$entrustRoleCallback` properties of your controller. Or lastly, you can create the method separately and assign its name as a string to either of those properties. In any case, Entrust will call your callback function whenever one of the filters fails. It will pass the following to your function:
+
+1. The controller method name
+1. The permissions or roles that failed
+1. The entire set of permissions or roles that were required
+1. The `Route` object
+1. The `Request` object
+
+A sample callback function could look like the following:
+
+```php
+public function entrustPermissionCallback($method, $failedPerms, $allPerms)
+{
+    if (empty($allPerms)) {
+        // No perms defined but filter still failed, meaning user was not authenticated
+        App::abort(401, 'You do not have permission to view this page, please log in.');
+    }
+
+    // Empty failed perms means user was not authenticated
+    // Act as if *all* perms failed instead
+    $failedPerms = $failedPerms ?: $allPerms;
+
+    $join = $this->entrustRequireAll ? 'and' : 'or';
+
+    $desc = Permission::whereIn('name', (array)$failedPerms)->lists('description');
+
+    switch (count($desc)) {
+        case 1:
+            $message = "You do not have permission to {$desc[0]}!";
+            break;
+        case 2:
+            $message = "You do not have permission to {$desc[0]} $join {$desc[1]}!";
+            break;
+        default:
+            $last = array_pop($desc);
+
+            $message = 'You do not have permission to ' . implode(', ', $desc) . ", $join $last!";
+            break;
+    }
+
+    App::abort(403, $message);
+}
 ```
 
 ### Short syntax route filter
