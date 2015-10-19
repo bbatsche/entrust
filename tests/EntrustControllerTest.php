@@ -220,27 +220,21 @@ class EntrustControllerTest extends PHPUnit_Framework_TestCase
 
         $this->app->shouldReceive('abort')->with(403)->andThrow($exception)->twice();
 
-        $exceptionThrown = false;
-
         try {
             $this->controller->entrustRoleFilter($this->route, $this->request);
+
+            $this->fail('Expected exception was not thrown');
         } catch (HttpException $e) {
             $this->assertSame($exception, $e);
-            $exceptionThrown = true;
         }
-
-        if (!$exceptionThrown) $this->fail('Expected exception was not thrown');
-
-        $exceptionThrown = false;
 
         try {
             $this->controller->entrustPermissionFilter($this->route, $this->request);
+
+            $this->fail('Expected exception was not thrown');
         } catch (HttpException $e) {
             $this->assertSame($exception, $e);
-            $exceptionThrown = true;
         }
-
-        if (!$exceptionThrown) $this->fail('Expected exception was not thrown');
     }
 
     protected function callbackString($failedRoles, $failedPerms, $allRoles, $allPerms)

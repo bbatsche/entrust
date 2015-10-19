@@ -15,8 +15,8 @@ trait EntrustControllerTrait
     protected $entrustAllowMissing = true;
     protected $entrustRequireAll   = false;
 
-    protected $entrustPermissionCallback = '';
-    protected $entrustRoleCallback = '';
+    protected $entrustPermissionCallback = null;
+    protected $entrustRoleCallback = null;
 
     public function entrustPermissionFilter(Route $route, Request $request)
     {
