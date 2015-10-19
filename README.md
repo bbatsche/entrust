@@ -31,8 +31,9 @@ Either way though, I hope to demonstrate some genuinely helpful features and opt
     - [Concepts](#concepts)
         - [Checking for Roles & Permissions](#checking-for-roles--permissions)
         - [User ability](#user-ability)
-    - [Short syntax route filter](#short-syntax-route-filter)
-    - [Route filter](#route-filter)
+    - [Controller Trait (and Filters)](#controller-trait)
+    - [Short Syntax Route Filter](#short-syntax-route-filter)
+    - [Route Filter](#route-filter)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 - [Additional information](#additional-information)
@@ -81,7 +82,7 @@ At the end of `config/app.php` add `'Entrust' => 'Bbatsche\Entrust\EntrustFacade
 
 ## Configuration
 
-Set the property values in the `config/auth.php` (typically, these values are configured correctly out of the box but it is worth double checking). These values will be used by entrust to refer to the correct user table and model.
+Set the property values in the `config/auth.php` (typically, these values are configured correctly out of the box but it is worth double checking). These values will be used by Entrust to refer to the correct user table and model.
 
 You can also publish the configuration for this package to further customize table names and model namespaces:
 
@@ -218,7 +219,7 @@ For easy of use (and backwards compatibility) Entrust includes abstract classes 
 
 #### Soft Deleting
 
-The default migration takes advantage of `onDelete('cascade')` clauses within the pivot tables to remove relations when a parent record is deleted. If for some reason you cannot use cascading deletes in your database, the EntrustRole and EntrustPermission classes, and the HasRole trait include event listeners to manually delete records in relevant pivot tables. In the interest of not accidentally deleting data, the event listeners will **not** delete pivot data if the model uses soft deleting. However, due to limitations in Laravel's event listeners, there is no way to distinguish between a call to `delete()` versus a call to `forceDelete()`. For this reason, **before you force delete a model, you must manually delete any of the relationship data** (unless your pivot tables uses cascading deletes). For example:
+The default migration takes advantage of `onDelete('cascade')` clauses within the pivot tables to remove relations when a parent record is deleted. If for some reason you cannot use cascading deletes in your database, `EntrustRoleTrait`, `EntrustPermissionTrait`, and `EntrustUserTrait` include event listeners to manually delete records in relevant pivot tables. In the interest of not accidentally deleting data, the event listeners will **not** delete pivot data if the model uses soft deleting. However, due to limitations in Laravel's event listeners, there is no way to distinguish between a call to `delete()` versus a call to `forceDelete()`. For this reason, **before you force delete a model, you must manually delete any of the relationship data** (unless your pivot tables uses cascading deletes). For example:
 
 ```php
 $role = Role::findOrFail(1); // Pull back a given role
@@ -252,7 +253,7 @@ $admin->description  = 'User is allowed to manage and edit other users'; // opti
 $admin->save();
 ```
 
-Next, with both roles created let's assign them to the users. Thanks to the `EntrustUserTrait` trait this is as easy as:
+Next, with both roles created let's assign them to the users. Thanks to `EntrustUserTrait` this is as easy as:
 
 ```php
 $user = User::where('username', '=', 'bbatsche')->first();
